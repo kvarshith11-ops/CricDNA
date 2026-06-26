@@ -1,4 +1,6 @@
 import { StubMetricCalculator } from '../calculators/StubMetricCalculator'
+import { battingAverageMetricDefinitions } from './battingAverageMetrics'
+import { battingScoringMetricDefinitions } from './battingScoringMetrics'
 import { battingVolumeMetricDefinitions } from './battingVolumeMetrics'
 import {
   MetricCategory,
@@ -8,6 +10,8 @@ import {
 
 export const primitiveMetricDefinitions: readonly MetricDefinition[] = [
   ...battingVolumeMetricDefinitions,
+  ...battingScoringMetricDefinitions,
+  ...battingAverageMetricDefinitions,
   {
     id: 'bowling.wickets',
     name: 'Wickets',
