@@ -1,4 +1,6 @@
 export * from './calculators/StubMetricCalculator'
+export * from './calculators/batting/BattingVolumeCalculators'
+export * from './definitions/battingVolumeMetrics'
 export * from './definitions/primitiveMetrics'
 export * from './definitions/types'
 export * from './engine/EngineeringMetrics'

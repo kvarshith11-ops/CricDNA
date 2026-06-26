@@ -1,4 +1,5 @@
 import { StubMetricCalculator } from '../calculators/StubMetricCalculator'
+import { battingVolumeMetricDefinitions } from './battingVolumeMetrics'
 import {
   MetricCategory,
   MetricLevel,
@@ -6,23 +7,7 @@ import {
 } from './types'
 
 export const primitiveMetricDefinitions: readonly MetricDefinition[] = [
-  {
-    id: 'batting.runs',
-    name: 'Runs',
-    category: MetricCategory.Batting,
-    level: MetricLevel.Primitive,
-    dependencies: [],
-    version: '1.0.0',
-    calculator: new StubMetricCalculator({
-      metricId: 'batting.runs',
-      name: 'Runs',
-      category: MetricCategory.Batting,
-      level: MetricLevel.Primitive,
-      version: '1.0.0',
-      value: 0,
-      unit: 'runs',
-    }),
-  },
+  ...battingVolumeMetricDefinitions,
   {
     id: 'bowling.wickets',
     name: 'Wickets',

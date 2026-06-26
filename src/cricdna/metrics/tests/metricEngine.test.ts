@@ -107,7 +107,7 @@ describe('Metric Engine infrastructure', () => {
   it('loads the default registry with placeholder primitive metrics', () => {
     const registry = loadDefaultMetricRegistry()
 
-    expect(registry.has('batting.runs')).toBe(true)
+    expect(registry.has('bat.runs')).toBe(true)
     expect(registry.has('bowling.wickets')).toBe(true)
     expect(registry.has('fielding.catches')).toBe(true)
     expect(registry.has('context.matches')).toBe(true)
