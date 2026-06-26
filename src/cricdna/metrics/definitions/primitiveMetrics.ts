@@ -3,6 +3,7 @@ import { battingAverageMetricDefinitions } from './battingAverageMetrics'
 import { battingScoringMetricDefinitions } from './battingScoringMetrics'
 import { battingVolumeMetricDefinitions } from './battingVolumeMetrics'
 import { bowlingCoreMetricDefinitions } from './bowlingCoreMetrics'
+import { fieldingCoreMetricDefinitions } from './fieldingCoreMetrics'
 import {
   MetricCategory,
   MetricLevel,
@@ -14,23 +15,7 @@ export const primitiveMetricDefinitions: readonly MetricDefinition[] = [
   ...battingScoringMetricDefinitions,
   ...battingAverageMetricDefinitions,
   ...bowlingCoreMetricDefinitions,
-  {
-    id: 'fielding.catches',
-    name: 'Catches',
-    category: MetricCategory.Fielding,
-    level: MetricLevel.Primitive,
-    dependencies: [],
-    version: '1.0.0',
-    calculator: new StubMetricCalculator({
-      metricId: 'fielding.catches',
-      name: 'Catches',
-      category: MetricCategory.Fielding,
-      level: MetricLevel.Primitive,
-      version: '1.0.0',
-      value: 0,
-      unit: 'catches',
-    }),
-  },
+  ...fieldingCoreMetricDefinitions,
   {
     id: 'context.matches',
     name: 'Matches',

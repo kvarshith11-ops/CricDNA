@@ -109,7 +109,7 @@ describe('Metric Engine infrastructure', () => {
 
     expect(registry.has('bat.runs')).toBe(true)
     expect(registry.has('bowl.wickets')).toBe(true)
-    expect(registry.has('fielding.catches')).toBe(true)
+    expect(registry.has('field.catches')).toBe(true)
     expect(registry.has('context.matches')).toBe(true)
   })
 
