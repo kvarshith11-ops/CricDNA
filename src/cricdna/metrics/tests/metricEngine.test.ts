@@ -220,6 +220,8 @@ describe('Metric Engine infrastructure', () => {
       'bowl.wicket_threat',
       'bowl.effectiveness',
       'field.impact',
+      'field.reliability',
+      'field.activity',
     ])
   })
 })

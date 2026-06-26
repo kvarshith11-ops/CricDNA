@@ -1,4 +1,3 @@
-import { PlaceholderCompositeMetricCalculator } from '../calculators/PlaceholderCompositeMetricCalculator'
 import {
   BatConsistencyCalculator,
   BatScoringConsistencyCalculator,
@@ -13,37 +12,17 @@ import {
   BowlWicketThreatCalculator,
 } from '../calculators/bowling/BowlingCompositeCalculators'
 import {
+  FieldActivityCalculator,
+  FieldImpactCalculator,
+  FieldReliabilityCalculator,
+} from '../calculators/fielding/FieldingCompositeCalculators'
+import {
   MetricCategory,
   MetricLevel,
   type MetricDefinition,
-  type MetricId,
 } from './types'
 
 const version = '1.0.0'
-
-const placeholderComposite = (
-  id: MetricId,
-  name: string,
-  category: MetricCategory,
-  dependencies: readonly MetricId[],
-  value: number,
-): MetricDefinition => ({
-  id,
-  name,
-  category,
-  level: MetricLevel.Composite,
-  dependencies,
-  version,
-  calculator: new PlaceholderCompositeMetricCalculator({
-    metricId: id,
-    name,
-    category,
-    version,
-    dependencies,
-    value,
-    unit: 'stub',
-  }),
-})
 
 export const compositeMetricDefinitions: readonly MetricDefinition[] = [
   {
@@ -127,11 +106,46 @@ export const compositeMetricDefinitions: readonly MetricDefinition[] = [
     version,
     calculator: new BowlEffectivenessCalculator(),
   },
-  placeholderComposite(
-    'field.impact',
-    'Fielding Impact',
-    MetricCategory.Fielding,
-    ['field.dismissals', 'field.matches'],
-    0,
-  ),
+  {
+    id: 'field.impact',
+    name: 'Fielding Impact',
+    category: MetricCategory.Fielding,
+    level: MetricLevel.Composite,
+    dependencies: [
+      'field.matches',
+      'field.dismissals',
+      'field.catches',
+      'field.stumpings',
+      'field.run_outs',
+      'field.assisted_run_outs',
+    ],
+    version,
+    calculator: new FieldImpactCalculator(),
+  },
+  {
+    id: 'field.reliability',
+    name: 'Fielding Reliability',
+    category: MetricCategory.Fielding,
+    level: MetricLevel.Composite,
+    dependencies: ['field.innings', 'field.dismissals'],
+    version,
+    calculator: new FieldReliabilityCalculator(),
+  },
+  {
+    id: 'field.activity',
+    name: 'Fielding Activity',
+    category: MetricCategory.Fielding,
+    level: MetricLevel.Composite,
+    dependencies: [
+      'field.matches',
+      'field.innings',
+      'field.dismissals',
+      'field.catches',
+      'field.stumpings',
+      'field.run_outs',
+      'field.assisted_run_outs',
+    ],
+    version,
+    calculator: new FieldActivityCalculator(),
+  },
 ]
