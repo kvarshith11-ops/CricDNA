@@ -2,6 +2,7 @@ import { StubMetricCalculator } from '../calculators/StubMetricCalculator'
 import { battingAverageMetricDefinitions } from './battingAverageMetrics'
 import { battingScoringMetricDefinitions } from './battingScoringMetrics'
 import { battingVolumeMetricDefinitions } from './battingVolumeMetrics'
+import { bowlingCoreMetricDefinitions } from './bowlingCoreMetrics'
 import {
   MetricCategory,
   MetricLevel,
@@ -12,23 +13,7 @@ export const primitiveMetricDefinitions: readonly MetricDefinition[] = [
   ...battingVolumeMetricDefinitions,
   ...battingScoringMetricDefinitions,
   ...battingAverageMetricDefinitions,
-  {
-    id: 'bowling.wickets',
-    name: 'Wickets',
-    category: MetricCategory.Bowling,
-    level: MetricLevel.Primitive,
-    dependencies: [],
-    version: '1.0.0',
-    calculator: new StubMetricCalculator({
-      metricId: 'bowling.wickets',
-      name: 'Wickets',
-      category: MetricCategory.Bowling,
-      level: MetricLevel.Primitive,
-      version: '1.0.0',
-      value: 0,
-      unit: 'wickets',
-    }),
-  },
+  ...bowlingCoreMetricDefinitions,
   {
     id: 'fielding.catches',
     name: 'Catches',
