@@ -1,5 +1,6 @@
 import axios from 'axios'
 import rawMockPlayers from '../mocks/players.json'
+import type { AIScoutResponse } from '../types/aiScout'
 import type { Player, PlayersApiResponse } from '../types/player'
 
 const CRIC_API_BASE_URL = 'https://api.cricapi.com/v1'
@@ -31,4 +32,18 @@ export const fetchPlayers = async (offset = 0): Promise<Player[]> => {
   }
 
   return response.data.data ?? []
+}
+
+export const fetchPlayerScoutProfile = async (
+  playerId: string,
+): Promise<AIScoutResponse> => {
+  const response = await axios.post<AIScoutResponse>(
+    `/api/player/${encodeURIComponent(playerId)}/profile`,
+    {},
+    {
+      timeout: 90_000,
+    },
+  )
+
+  return response.data
 }

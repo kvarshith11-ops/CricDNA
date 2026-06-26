@@ -1,42 +1,42 @@
 [
   {
-    "id": "player-001",
-    "name": "Virat Kohli",
-    "country": "India"
-  },
-  {
-    "id": "player-002",
-    "name": "Babar Azam",
-    "country": "Pakistan"
-  },
-  {
-    "id": "player-003",
-    "name": "Kane Williamson",
-    "country": "New Zealand"
-  },
-  {
-    "id": "player-004",
-    "name": "Joe Root",
-    "country": "England"
-  },
-  {
-    "id": "player-005",
-    "name": "Steve Smith",
+    "id": "1151",
+    "name": "Josh Inglis",
     "country": "Australia"
   },
   {
-    "id": "player-006",
-    "name": "Rohit Sharma",
+    "id": "10923",
+    "name": "Ishan Kishan",
     "country": "India"
   },
   {
-    "id": "player-007",
-    "name": "Aiden Markram",
-    "country": "South Africa"
+    "id": "804",
+    "name": "Cameron Green",
+    "country": "Australia"
   },
   {
-    "id": "player-008",
-    "name": "Shakib Al Hasan",
-    "country": "Bangladesh"
+    "id": "10911",
+    "name": "Hardik Pandya",
+    "country": "India"
+  },
+  {
+    "id": "852",
+    "name": "Adam Zampa",
+    "country": "Australia"
+  },
+  {
+    "id": "10982",
+    "name": "Jasprit Bumrah",
+    "country": "India"
+  },
+  {
+    "id": "291",
+    "name": "Alex Carey",
+    "country": "Australia"
+  },
+  {
+    "id": "10916",
+    "name": "Suryakumar Yadav",
+    "country": "India"
   }
 ]
