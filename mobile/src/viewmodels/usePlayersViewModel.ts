@@ -43,8 +43,37 @@ export const usePlayersViewModel = (): PlayersViewModel => {
   }, [])
 
   useEffect(() => {
-    void loadPlayers()
-  }, [loadPlayers])
+    let isActive = true
+
+    const loadInitialPlayers = async () => {
+      try {
+        const loadedPlayers = await fetchPlayers()
+
+        if (!isActive) {
+          return
+        }
+
+        setPlayers(loadedPlayers)
+        setViewState(
+          loadedPlayers.length > 0 ? ViewState.Loaded : ViewState.Empty,
+        )
+      } catch (error) {
+        if (!isActive) {
+          return
+        }
+
+        setPlayers([])
+        setErrorMessage(getErrorMessage(error))
+        setViewState(ViewState.Error)
+      }
+    }
+
+    void loadInitialPlayers()
+
+    return () => {
+      isActive = false
+    }
+  }, [])
 
   const filteredPlayers = useMemo(() => {
     const normalizedSearch = searchTerm.trim().toLowerCase()
