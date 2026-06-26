@@ -1,0 +1,82 @@
+{
+  "identity": {
+    "id": "player-001",
+    "name": "Virat Kohli",
+    "age": 37,
+    "country": "India",
+    "role": "Batter"
+  },
+  "headlineStats": {
+    "matches": 289,
+    "runs": 13848,
+    "battingAverage": 58.67,
+    "strikeRate": 93.54,
+    "bestFigure": "183"
+  },
+  "recentMatches": [
+    {
+      "date": "2026-05-20",
+      "opponent": "Australia",
+      "performance": "87 Runs",
+      "strikeRate": 102.3,
+      "result": "Won",
+      "playerOfMatch": true
+    }
+  ],
+  "cricketDNA": {
+    "score": 92,
+    "tier": "Elite",
+    "archetype": "Consistency King",
+    "breakdown": [
+      {
+        "metric": "Runs",
+        "contribution": 30
+      },
+      {
+        "metric": "Average",
+        "contribution": 25
+      },
+      {
+        "metric": "Strike Rate",
+        "contribution": 20
+      },
+      {
+        "metric": "Recent Form",
+        "contribution": 17
+      }
+    ],
+    "explanation": "Elite batter with exceptional consistency and strong recent form."
+  },
+  "trend": {
+    "label": "Improving",
+    "confidence": "High",
+    "reason": "Three 50+ scores in the last five matches."
+  },
+  "summary": {
+    "note": "Virat Kohli continues to be one of the most reliable batters in world cricket.",
+    "highlights": [
+      "Top 5% consistency among batters",
+      "Excellent chasing record",
+      "Strong recent form"
+    ]
+  },
+  "profile": {
+    "strengths": [
+      {
+        "metric": "Consistency",
+        "reason": "Batting average above 58."
+      }
+    ],
+    "weaknesses": [
+      {
+        "metric": "Powerplay Aggression",
+        "reason": "Strike rate lower than elite openers."
+      }
+    ]
+  },
+  "meta": {
+    "format": "ODI",
+    "sampleSizeFlag": true,
+    "timestamp": "2026-06-20T12:00:00Z"
+  }
+}

@@ -1,0 +1,487 @@
+.app-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 40px 0 56px;
+}
+
+.page-header,
+.player-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: 24px;
+  align-items: end;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(31, 122, 74, 0.12), rgba(36, 107, 158, 0.08)),
+    var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.players-header {
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: var(--green-dark);
+  font-size: 0.78rem;
+  font-weight: 760;
+  text-transform: uppercase;
+}
+
+.page-copy {
+  max-width: 650px;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.search-field {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.search-field input {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 16px;
+  color: var(--ink);
+  background: var(--surface);
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.search-field input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 4px rgba(31, 122, 74, 0.14);
+}
+
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.player-card {
+  display: flex;
+  min-height: 104px;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+  color: var(--ink);
+  text-align: left;
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgba(33, 49, 38, 0.06);
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.player-card:hover,
+.player-card:focus-visible {
+  border-color: rgba(31, 122, 74, 0.45);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.player-card:focus-visible {
+  outline: 3px solid rgba(31, 122, 74, 0.2);
+  outline-offset: 2px;
+}
+
+.player-avatar {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--surface);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--green), var(--blue));
+}
+
+.player-card strong,
+.stat-card strong,
+.profile-item strong {
+  display: block;
+}
+
+.player-card small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.status-card {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 28px;
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgba(33, 49, 38, 0.06);
+}
+
+.status-card p {
+  color: var(--muted);
+}
+
+.primary-button {
+  width: fit-content;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 16px;
+  color: var(--surface);
+  font-weight: 760;
+  background: var(--green);
+}
+
+.details-page {
+  display: grid;
+  gap: 20px;
+}
+
+.back-link {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  color: var(--green-dark);
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.player-hero {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.meta-row span,
+.format-pill,
+.confidence-pill,
+.result-pill {
+  border: 1px solid rgba(31, 122, 74, 0.22);
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: var(--green-dark);
+  font-size: 0.9rem;
+  font-weight: 760;
+  background: rgba(31, 122, 74, 0.08);
+}
+
+.format-pill {
+  align-self: start;
+}
+
+.dna-hero-card,
+.content-section,
+.trend-card,
+.summary-card,
+.insight-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 24px;
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgba(33, 49, 38, 0.06);
+}
+
+.dna-hero-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.dna-hero-card p,
+.trend-card p,
+.summary-card p,
+.profile-item p {
+  color: var(--muted);
+}
+
+.score-circle {
+  position: relative;
+  display: flex;
+  width: 150px;
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 50%;
+  background: conic-gradient(var(--green) var(--score), #dce7dd 0);
+}
+
+.score-circle::before {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  background: var(--surface);
+  content: '';
+}
+
+.score-circle strong,
+.score-circle span {
+  position: relative;
+  z-index: 1;
+}
+
+.score-circle strong {
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.score-circle span {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.dna-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.dna-labels span,
+.dna-labels strong {
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: var(--surface);
+  background: var(--blue);
+}
+
+.dna-labels strong {
+  background: var(--green);
+}
+
+.section-title {
+  margin-bottom: 16px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.stat-card {
+  min-height: 112px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  background: var(--surface-muted);
+}
+
+.stat-card span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.stat-card strong {
+  margin-top: 10px;
+  font-size: clamp(1.4rem, 2vw, 2.2rem);
+  line-height: 1.1;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 24px;
+}
+
+.breakdown-list {
+  display: grid;
+  gap: 16px;
+}
+
+.breakdown-row {
+  display: grid;
+  grid-template-columns: minmax(160px, 220px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+
+.breakdown-row span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.progress-track {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #dde6df;
+}
+
+.progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--green), var(--amber));
+}
+
+.trend-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  border-left: 5px solid var(--amber);
+}
+
+.trend-card p {
+  grid-column: 1 / -1;
+}
+
+.summary-card {
+  display: grid;
+  gap: 14px;
+}
+
+.highlight-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.highlight-list li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.highlight-list li::before {
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  content: '';
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.profile-item {
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--line);
+  padding: 14px 12px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+th {
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+td {
+  font-weight: 650;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+@media (max-width: 860px) {
+  .app-shell {
+    width: min(100% - 24px, 1180px);
+    padding: 24px 0 40px;
+  }
+
+  .page-header,
+  .player-hero,
+  .dna-hero-card,
+  .two-column,
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .breakdown-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .page-header,
+  .player-hero,
+  .dna-hero-card,
+  .content-section,
+  .trend-card,
+  .summary-card,
+  .insight-card,
+  .status-card {
+    padding: 18px;
+  }
+
+  .players-grid,
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trend-card {
+    grid-template-columns: 1fr;
+  }
+
+  .score-circle {
+    width: 132px;
+  }
+}
