@@ -213,6 +213,7 @@ describe('Metric Engine infrastructure', () => {
   it('registers placeholder composite metrics', () => {
     expect(compositeMetricDefinitions.map((definition) => definition.id)).toEqual([
       'bat.intent',
+      'bat.boundary_intent',
       'bat.consistency',
       'bowl.control',
       'field.impact',

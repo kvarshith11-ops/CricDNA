@@ -1,6 +1,7 @@
 export * from './calculators/PlaceholderCompositeMetricCalculator'
 export * from './calculators/StubMetricCalculator'
 export * from './calculators/batting/BattingAverageCalculators'
+export * from './calculators/batting/BattingIntentCompositeCalculators'
 export * from './calculators/batting/BattingScoringCalculators'
 export * from './calculators/batting/BattingVolumeCalculators'
 export * from './calculators/behaviour/BehaviourCoreCalculators'

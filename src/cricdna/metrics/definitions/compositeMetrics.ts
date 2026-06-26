@@ -1,5 +1,9 @@
 import { PlaceholderCompositeMetricCalculator } from '../calculators/PlaceholderCompositeMetricCalculator'
 import {
+  BatBoundaryIntentCalculator,
+  BatIntentCalculator,
+} from '../calculators/batting/BattingIntentCompositeCalculators'
+import {
   MetricCategory,
   MetricLevel,
   type MetricDefinition,
@@ -33,13 +37,24 @@ const placeholderComposite = (
 })
 
 export const compositeMetricDefinitions: readonly MetricDefinition[] = [
-  placeholderComposite(
-    'bat.intent',
-    'Batting Intent',
-    MetricCategory.Batting,
-    ['bat.strike_rate', 'bat.boundary_percentage', 'bat.runs_per_ball'],
-    0,
-  ),
+  {
+    id: 'bat.intent',
+    name: 'Batting Intent',
+    category: MetricCategory.Batting,
+    level: MetricLevel.Composite,
+    dependencies: ['bat.strike_rate', 'bat.boundary_percentage', 'bat.runs_per_ball'],
+    version,
+    calculator: new BatIntentCalculator(),
+  },
+  {
+    id: 'bat.boundary_intent',
+    name: 'Boundary Intent',
+    category: MetricCategory.Batting,
+    level: MetricLevel.Composite,
+    dependencies: ['bat.boundary_percentage'],
+    version,
+    calculator: new BatBoundaryIntentCalculator(),
+  },
   placeholderComposite(
     'bat.consistency',
     'Batting Consistency',
