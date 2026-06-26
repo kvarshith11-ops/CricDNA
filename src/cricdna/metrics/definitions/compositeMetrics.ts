@@ -1,8 +1,17 @@
 import { PlaceholderCompositeMetricCalculator } from '../calculators/PlaceholderCompositeMetricCalculator'
 import {
+  BatConsistencyCalculator,
+  BatScoringConsistencyCalculator,
+} from '../calculators/batting/BattingConsistencyCompositeCalculators'
+import {
   BatBoundaryIntentCalculator,
   BatIntentCalculator,
 } from '../calculators/batting/BattingIntentCompositeCalculators'
+import {
+  BowlControlCalculator,
+  BowlEffectivenessCalculator,
+  BowlWicketThreatCalculator,
+} from '../calculators/bowling/BowlingCompositeCalculators'
 import {
   MetricCategory,
   MetricLevel,
@@ -55,20 +64,69 @@ export const compositeMetricDefinitions: readonly MetricDefinition[] = [
     version,
     calculator: new BatBoundaryIntentCalculator(),
   },
-  placeholderComposite(
-    'bat.consistency',
-    'Batting Consistency',
-    MetricCategory.Batting,
-    ['bat.runs', 'bat.innings', 'bat.average'],
-    0,
-  ),
-  placeholderComposite(
-    'bowl.control',
-    'Bowling Control',
-    MetricCategory.Bowling,
-    ['bowl.economy', 'bowl.wides', 'bowl.no_balls'],
-    0,
-  ),
+  {
+    id: 'bat.consistency',
+    name: 'Batting Consistency',
+    category: MetricCategory.Batting,
+    level: MetricLevel.Composite,
+    dependencies: [
+      'bat.innings',
+      'bat.average',
+      'bat.fifties',
+      'bat.hundreds',
+      'bat.ducks',
+    ],
+    version,
+    calculator: new BatConsistencyCalculator(),
+  },
+  {
+    id: 'bat.scoring_consistency',
+    name: 'Scoring Consistency',
+    category: MetricCategory.Batting,
+    level: MetricLevel.Composite,
+    dependencies: ['bat.innings', 'bat.fifties', 'bat.hundreds', 'bat.ducks'],
+    version,
+    calculator: new BatScoringConsistencyCalculator(),
+  },
+  {
+    id: 'bowl.control',
+    name: 'Bowling Control',
+    category: MetricCategory.Bowling,
+    level: MetricLevel.Composite,
+    dependencies: [
+      'bowl.economy',
+      'bowl.wides',
+      'bowl.no_balls',
+      'bowl.overs',
+      'bowl.maidens',
+    ],
+    version,
+    calculator: new BowlControlCalculator(),
+  },
+  {
+    id: 'bowl.wicket_threat',
+    name: 'Wicket Threat',
+    category: MetricCategory.Bowling,
+    level: MetricLevel.Composite,
+    dependencies: ['bowl.wickets', 'bowl.innings', 'bowl.matches'],
+    version,
+    calculator: new BowlWicketThreatCalculator(),
+  },
+  {
+    id: 'bowl.effectiveness',
+    name: 'Bowling Effectiveness',
+    category: MetricCategory.Bowling,
+    level: MetricLevel.Composite,
+    dependencies: [
+      'bowl.economy',
+      'bowl.average',
+      'bowl.strike_rate',
+      'bowl.wickets',
+      'bowl.innings',
+    ],
+    version,
+    calculator: new BowlEffectivenessCalculator(),
+  },
   placeholderComposite(
     'field.impact',
     'Fielding Impact',

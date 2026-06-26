@@ -215,7 +215,10 @@ describe('Metric Engine infrastructure', () => {
       'bat.intent',
       'bat.boundary_intent',
       'bat.consistency',
+      'bat.scoring_consistency',
       'bowl.control',
+      'bowl.wicket_threat',
+      'bowl.effectiveness',
       'field.impact',
     ])
   })
