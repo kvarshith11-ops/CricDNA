@@ -6,6 +6,7 @@ import {
   selectRepresentativePlayerId,
 } from '../../extraction/__tests__/dataset'
 import {
+  compositeMetricDefinitions,
   MetricCategory,
   MetricLevel,
   MetricRegistry,
@@ -111,18 +112,18 @@ describe('Metric Engine infrastructure', () => {
     expect(registry.has('bowl.wickets')).toBe(true)
     expect(registry.has('field.catches')).toBe(true)
     expect(registry.has('context.matches')).toBe(true)
+    expect(registry.has('bat.intent')).toBe(true)
   })
 
   it('resolves dependency graph execution order', () => {
     const registry = MetricRegistry.fromDefinitions([
       stubDefinition('a'),
       stubDefinition('b', ['a']),
-      stubDefinition('c', ['b']),
+      stubDefinition('c', ['a']),
     ])
 
     expect(resolveExecutionPlan(registry, ['c']).orderedMetricIds).toEqual([
       'a',
-      'b',
       'c',
     ])
   })
@@ -150,7 +151,7 @@ describe('Metric Engine infrastructure', () => {
     const registry = MetricRegistry.fromDefinitions([
       stubDefinition('a', [], calculatorFor('a')),
       stubDefinition('b', ['a'], calculatorFor('b')),
-      stubDefinition('c', ['b'], calculatorFor('c')),
+      stubDefinition('c', ['a'], calculatorFor('c')),
     ])
 
     new MetricRunner(registry).run({
@@ -158,7 +159,7 @@ describe('Metric Engine infrastructure', () => {
       metricIds: ['c'],
     })
 
-    expect(executionOrder).toEqual(['a', 'b', 'c'])
+    expect(executionOrder).toEqual(['a', 'c'])
   })
 
   it('uses cache so shared dependencies execute once', () => {
@@ -207,5 +208,14 @@ describe('Metric Engine infrastructure', () => {
     expect(() => resolveExecutionPlan(registry)).toThrow(
       'Circular metric dependency detected',
     )
+  })
+
+  it('registers placeholder composite metrics', () => {
+    expect(compositeMetricDefinitions.map((definition) => definition.id)).toEqual([
+      'bat.intent',
+      'bat.consistency',
+      'bowl.control',
+      'field.impact',
+    ])
   })
 })

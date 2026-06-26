@@ -1,4 +1,8 @@
-import type { MetricExecutionPlan, MetricId } from '../definitions/types'
+import {
+  MetricLevel,
+  type MetricExecutionPlan,
+  type MetricId,
+} from '../definitions/types'
 import type { MetricRegistry } from '../registry/MetricRegistry'
 
 enum VisitState {
@@ -12,6 +16,17 @@ export const validateMetricRegistry = (registry: MetricRegistry): void => {
       if (!registry.has(dependencyId)) {
         throw new Error(
           `Metric '${definition.id}' depends on missing metric '${dependencyId}'.`,
+        )
+      }
+
+      const dependency = registry.getRequired(dependencyId)
+
+      if (
+        definition.level === MetricLevel.Composite &&
+        dependency.level !== MetricLevel.Primitive
+      ) {
+        throw new Error(
+          `Composite metric '${definition.id}' can depend only on primitive metric '${dependencyId}'.`,
         )
       }
     }
