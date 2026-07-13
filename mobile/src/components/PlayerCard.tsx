@@ -8,6 +8,8 @@ interface PlayerCardProps {
 }
 
 export const PlayerCard = ({ player, onSelect }: PlayerCardProps) => {
+  const meta = [player.country, player.role].filter(Boolean).join(' • ')
+
   return (
     <Pressable
       style={({ pressed }) => [
@@ -23,7 +25,10 @@ export const PlayerCard = ({ player, onSelect }: PlayerCardProps) => {
       </View>
       <View style={styles.copy}>
         <Text style={styles.name}>{player.name}</Text>
-        <Text style={styles.country}>{player.country || 'Country unavailable'}</Text>
+        {meta ? <Text style={styles.country}>{meta}</Text> : null}
+        {player.matchCount ? (
+          <Text style={styles.evidence}>{player.matchCount} match evidence</Text>
+        ) : null}
       </View>
     </Pressable>
   )
@@ -71,5 +76,12 @@ const styles = StyleSheet.create({
     marginTop: 4,
     color: colors.muted,
     fontSize: 14,
+  },
+  evidence: {
+    marginTop: 6,
+    color: colors.greenDark,
+    fontSize: 12,
+    fontWeight: '700',
+    textTransform: 'uppercase',
   },
 })

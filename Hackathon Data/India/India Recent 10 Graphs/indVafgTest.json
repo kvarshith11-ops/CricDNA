@@ -1,0 +1,2354 @@
+{
+  "fixture": {
+    "competition": {
+      "id": 4585,
+      "name": "India v Afghanistan Test 2026 - Men"
+    },
+    "homeTeam": {
+      "id": 3,
+      "name": "India Men",
+      "shortName": "IND",
+      "teamColor": "#28C2F5",
+      "isWomensTeam": false
+    },
+    "awayTeam": {
+      "id": 6,
+      "name": "Afghanistan Men",
+      "shortName": "AFG",
+      "teamColor": "#1143EE",
+      "isWomensTeam": false
+    },
+    "venue": {
+      "id": 646,
+      "name": "Maharaja Yadavindra Singh International Cricket Stadium",
+      "city": "New Chandigarh"
+    },
+    "innings": [
+      {
+        "id": 74930,
+        "fixtureId": 40038,
+        "inningNumber": 1,
+        "battingTeamId": 3,
+        "bowlingTeamId": 6,
+        "overs": [
+          {
+            "id": 1590672,
+            "overNumber": 1,
+            "runrate": 6,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 6,
+            "totalInningWickets": 0,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590673,
+            "overNumber": 2,
+            "runrate": 3,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 6,
+            "totalInningWickets": 0,
+            "totalRuns": 0
+          },
+          {
+            "id": 1590674,
+            "overNumber": 3,
+            "runrate": 3.67,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 11,
+            "totalInningWickets": 0,
+            "totalRuns": 5
+          },
+          {
+            "id": 1590675,
+            "overNumber": 4,
+            "runrate": 3.75,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 15,
+            "totalInningWickets": 0,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590676,
+            "overNumber": 5,
+            "runrate": 3,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 15,
+            "totalInningWickets": 0,
+            "totalRuns": 0
+          },
+          {
+            "id": 1590677,
+            "overNumber": 6,
+            "runrate": 3.17,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 19,
+            "totalInningWickets": 0,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590678,
+            "overNumber": 7,
+            "runrate": 2.86,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 20,
+            "totalInningWickets": 0,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590679,
+            "overNumber": 8,
+            "runrate": 2.62,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 21,
+            "totalInningWickets": 0,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590680,
+            "overNumber": 9,
+            "runrate": 3.22,
+            "runsConceded": 8,
+            "wickets": 0,
+            "totalInningRuns": 29,
+            "totalInningWickets": 0,
+            "totalRuns": 8
+          },
+          {
+            "id": 1590681,
+            "overNumber": 10,
+            "runrate": 3.7,
+            "runsConceded": 8,
+            "wickets": 0,
+            "totalInningRuns": 37,
+            "totalInningWickets": 0,
+            "totalRuns": 8
+          },
+          {
+            "id": 1590682,
+            "overNumber": 11,
+            "runrate": 3.36,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 37,
+            "totalInningWickets": 0,
+            "totalRuns": 0
+          },
+          {
+            "id": 1590683,
+            "overNumber": 12,
+            "runrate": 3.42,
+            "runsConceded": 4,
+            "wickets": 1,
+            "totalInningRuns": 41,
+            "totalInningWickets": 1,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590684,
+            "overNumber": 13,
+            "runrate": 3.15,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 41,
+            "totalInningWickets": 1,
+            "totalRuns": 0
+          },
+          {
+            "id": 1590685,
+            "overNumber": 14,
+            "runrate": 2.93,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 41,
+            "totalInningWickets": 1,
+            "totalRuns": 0
+          },
+          {
+            "id": 1590686,
+            "overNumber": 15,
+            "runrate": 3.07,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 46,
+            "totalInningWickets": 1,
+            "totalRuns": 5
+          },
+          {
+            "id": 1590687,
+            "overNumber": 16,
+            "runrate": 3.44,
+            "runsConceded": 9,
+            "wickets": 0,
+            "totalInningRuns": 55,
+            "totalInningWickets": 1,
+            "totalRuns": 9
+          },
+          {
+            "id": 1590688,
+            "overNumber": 17,
+            "runrate": 3.71,
+            "runsConceded": 8,
+            "wickets": 0,
+            "totalInningRuns": 63,
+            "totalInningWickets": 1,
+            "totalRuns": 8
+          },
+          {
+            "id": 1590689,
+            "overNumber": 18,
+            "runrate": 3.83,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 69,
+            "totalInningWickets": 1,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590690,
+            "overNumber": 19,
+            "runrate": 4.05,
+            "runsConceded": 8,
+            "wickets": 0,
+            "totalInningRuns": 77,
+            "totalInningWickets": 1,
+            "totalRuns": 8
+          },
+          {
+            "id": 1590691,
+            "overNumber": 20,
+            "runrate": 3.95,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 79,
+            "totalInningWickets": 1,
+            "totalRuns": 2
+          },
+          {
+            "id": 1590692,
+            "overNumber": 21,
+            "runrate": 4,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 84,
+            "totalInningWickets": 1,
+            "totalRuns": 5
+          },
+          {
+            "id": 1590693,
+            "overNumber": 22,
+            "runrate": 3.86,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 85,
+            "totalInningWickets": 1,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590694,
+            "overNumber": 23,
+            "runrate": 3.87,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 89,
+            "totalInningWickets": 1,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590695,
+            "overNumber": 24,
+            "runrate": 3.96,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 95,
+            "totalInningWickets": 1,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590696,
+            "overNumber": 25,
+            "runrate": 3.84,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 96,
+            "totalInningWickets": 1,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590697,
+            "overNumber": 26,
+            "runrate": 4,
+            "runsConceded": 8,
+            "wickets": 0,
+            "totalInningRuns": 104,
+            "totalInningWickets": 1,
+            "totalRuns": 8
+          },
+          {
+            "id": 1590698,
+            "overNumber": 27,
+            "runrate": 3.96,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 107,
+            "totalInningWickets": 1,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590699,
+            "overNumber": 28,
+            "runrate": 4,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 112,
+            "totalInningWickets": 1,
+            "totalRuns": 5
+          },
+          {
+            "id": 1590700,
+            "overNumber": 29,
+            "runrate": 4,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 116,
+            "totalInningWickets": 1,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590701,
+            "overNumber": 30,
+            "runrate": 3.93,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 118,
+            "totalInningWickets": 1,
+            "totalRuns": 2
+          },
+          {
+            "id": 1590702,
+            "overNumber": 31,
+            "runrate": 3.9,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 121,
+            "totalInningWickets": 1,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590703,
+            "overNumber": 32,
+            "runrate": 4.16,
+            "runsConceded": 12,
+            "wickets": 0,
+            "totalInningRuns": 133,
+            "totalInningWickets": 1,
+            "totalRuns": 12
+          },
+          {
+            "id": 1590704,
+            "overNumber": 33,
+            "runrate": 4.21,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 139,
+            "totalInningWickets": 1,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590705,
+            "overNumber": 34,
+            "runrate": 4.15,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 141,
+            "totalInningWickets": 1,
+            "totalRuns": 2
+          },
+          {
+            "id": 1590706,
+            "overNumber": 35,
+            "runrate": 4.29,
+            "runsConceded": 9,
+            "wickets": 0,
+            "totalInningRuns": 150,
+            "totalInningWickets": 1,
+            "totalRuns": 9
+          },
+          {
+            "id": 1590707,
+            "overNumber": 36,
+            "runrate": 4.25,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 153,
+            "totalInningWickets": 1,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590708,
+            "overNumber": 37,
+            "runrate": 4.19,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 155,
+            "totalInningWickets": 1,
+            "totalRuns": 2
+          },
+          {
+            "id": 1590709,
+            "overNumber": 38,
+            "runrate": 4.26,
+            "runsConceded": 7,
+            "wickets": 0,
+            "totalInningRuns": 162,
+            "totalInningWickets": 1,
+            "totalRuns": 7
+          },
+          {
+            "id": 1590710,
+            "overNumber": 39,
+            "runrate": 4.31,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 168,
+            "totalInningWickets": 1,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590711,
+            "overNumber": 40,
+            "runrate": 4.22,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 169,
+            "totalInningWickets": 1,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590712,
+            "overNumber": 41,
+            "runrate": 4.22,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 173,
+            "totalInningWickets": 1,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590713,
+            "overNumber": 42,
+            "runrate": 4.21,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 177,
+            "totalInningWickets": 1,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590714,
+            "overNumber": 43,
+            "runrate": 4.21,
+            "runsConceded": 4,
+            "wickets": 1,
+            "totalInningRuns": 181,
+            "totalInningWickets": 2,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590715,
+            "overNumber": 44,
+            "runrate": 4.16,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 183,
+            "totalInningWickets": 2,
+            "totalRuns": 2
+          },
+          {
+            "id": 1590716,
+            "overNumber": 45,
+            "runrate": 4.11,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 185,
+            "totalInningWickets": 2,
+            "totalRuns": 2
+          },
+          {
+            "id": 1590717,
+            "overNumber": 46,
+            "runrate": 4.15,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 191,
+            "totalInningWickets": 2,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590718,
+            "overNumber": 47,
+            "runrate": 4.17,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 196,
+            "totalInningWickets": 2,
+            "totalRuns": 5
+          },
+          {
+            "id": 1590719,
+            "overNumber": 48,
+            "runrate": 4.17,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 200,
+            "totalInningWickets": 2,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590720,
+            "overNumber": 49,
+            "runrate": 4.24,
+            "runsConceded": 8,
+            "wickets": 0,
+            "totalInningRuns": 208,
+            "totalInningWickets": 2,
+            "totalRuns": 8
+          },
+          {
+            "id": 1590721,
+            "overNumber": 50,
+            "runrate": 4.18,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 209,
+            "totalInningWickets": 2,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590722,
+            "overNumber": 51,
+            "runrate": 4.18,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 213,
+            "totalInningWickets": 2,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590723,
+            "overNumber": 52,
+            "runrate": 4.23,
+            "runsConceded": 7,
+            "wickets": 0,
+            "totalInningRuns": 220,
+            "totalInningWickets": 2,
+            "totalRuns": 7
+          },
+          {
+            "id": 1590724,
+            "overNumber": 53,
+            "runrate": 4.23,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 224,
+            "totalInningWickets": 2,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590725,
+            "overNumber": 54,
+            "runrate": 4.24,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 229,
+            "totalInningWickets": 2,
+            "totalRuns": 5
+          },
+          {
+            "id": 1590726,
+            "overNumber": 55,
+            "runrate": 4.18,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 230,
+            "totalInningWickets": 2,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590727,
+            "overNumber": 56,
+            "runrate": 4.18,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 234,
+            "totalInningWickets": 2,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590728,
+            "overNumber": 57,
+            "runrate": 4.14,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 236,
+            "totalInningWickets": 2,
+            "totalRuns": 2
+          },
+          {
+            "id": 1590729,
+            "overNumber": 58,
+            "runrate": 4.17,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 242,
+            "totalInningWickets": 2,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590730,
+            "overNumber": 59,
+            "runrate": 4.12,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 243,
+            "totalInningWickets": 2,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590731,
+            "overNumber": 60,
+            "runrate": 4.08,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 245,
+            "totalInningWickets": 2,
+            "totalRuns": 2
+          },
+          {
+            "id": 1590732,
+            "overNumber": 61,
+            "runrate": 4.08,
+            "runsConceded": 4,
+            "wickets": 1,
+            "totalInningRuns": 249,
+            "totalInningWickets": 3,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590733,
+            "overNumber": 62,
+            "runrate": 4.26,
+            "runsConceded": 15,
+            "wickets": 0,
+            "totalInningRuns": 264,
+            "totalInningWickets": 3,
+            "totalRuns": 15
+          },
+          {
+            "id": 1590734,
+            "overNumber": 63,
+            "runrate": 4.33,
+            "runsConceded": 9,
+            "wickets": 0,
+            "totalInningRuns": 273,
+            "totalInningWickets": 3,
+            "totalRuns": 9
+          },
+          {
+            "id": 1590735,
+            "overNumber": 64,
+            "runrate": 4.31,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 276,
+            "totalInningWickets": 3,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590736,
+            "overNumber": 65,
+            "runrate": 4.29,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 279,
+            "totalInningWickets": 3,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590739,
+            "overNumber": 66,
+            "runrate": 4.32,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 285,
+            "totalInningWickets": 3,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590742,
+            "overNumber": 67,
+            "runrate": 4.27,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 286,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590745,
+            "overNumber": 68,
+            "runrate": 4.49,
+            "runsConceded": 19,
+            "wickets": 0,
+            "totalInningRuns": 305,
+            "totalInningWickets": 3,
+            "totalRuns": 19
+          },
+          {
+            "id": 1590748,
+            "overNumber": 69,
+            "runrate": 4.46,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 308,
+            "totalInningWickets": 3,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590750,
+            "overNumber": 70,
+            "runrate": 4.44,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 311,
+            "totalInningWickets": 3,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590753,
+            "overNumber": 71,
+            "runrate": 4.49,
+            "runsConceded": 8,
+            "wickets": 0,
+            "totalInningRuns": 319,
+            "totalInningWickets": 3,
+            "totalRuns": 8
+          },
+          {
+            "id": 1590754,
+            "overNumber": 72,
+            "runrate": 4.46,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 321,
+            "totalInningWickets": 3,
+            "totalRuns": 2
+          },
+          {
+            "id": 1590758,
+            "overNumber": 73,
+            "runrate": 4.41,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 322,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590760,
+            "overNumber": 74,
+            "runrate": 4.41,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 326,
+            "totalInningWickets": 3,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590765,
+            "overNumber": 75,
+            "runrate": 4.4,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 330,
+            "totalInningWickets": 3,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590767,
+            "overNumber": 76,
+            "runrate": 4.38,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 333,
+            "totalInningWickets": 3,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590769,
+            "overNumber": 77,
+            "runrate": 4.34,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 334,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590772,
+            "overNumber": 78,
+            "runrate": 4.32,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 337,
+            "totalInningWickets": 3,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590774,
+            "overNumber": 79,
+            "runrate": 4.3,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 340,
+            "totalInningWickets": 3,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590776,
+            "overNumber": 80,
+            "runrate": 4.26,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 341,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590779,
+            "overNumber": 81,
+            "runrate": 4.28,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 347,
+            "totalInningWickets": 3,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590781,
+            "overNumber": 82,
+            "runrate": 4.34,
+            "runsConceded": 9,
+            "wickets": 0,
+            "totalInningRuns": 356,
+            "totalInningWickets": 3,
+            "totalRuns": 9
+          },
+          {
+            "id": 1590785,
+            "overNumber": 83,
+            "runrate": 4.31,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 358,
+            "totalInningWickets": 3,
+            "totalRuns": 2
+          },
+          {
+            "id": 1590789,
+            "overNumber": 84,
+            "runrate": 4.33,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 364,
+            "totalInningWickets": 3,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590791,
+            "overNumber": 85,
+            "runrate": 4.33,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 368,
+            "totalInningWickets": 3,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590962,
+            "overNumber": 86,
+            "runrate": 4.31,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 371,
+            "totalInningWickets": 3,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590963,
+            "overNumber": 87,
+            "runrate": 4.32,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 376,
+            "totalInningWickets": 3,
+            "totalRuns": 5
+          },
+          {
+            "id": 1590964,
+            "overNumber": 88,
+            "runrate": 4.28,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 377,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590965,
+            "overNumber": 89,
+            "runrate": 4.25,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 378,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590966,
+            "overNumber": 90,
+            "runrate": 4.31,
+            "runsConceded": 10,
+            "wickets": 0,
+            "totalInningRuns": 388,
+            "totalInningWickets": 3,
+            "totalRuns": 10
+          },
+          {
+            "id": 1590967,
+            "overNumber": 91,
+            "runrate": 4.27,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 389,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590968,
+            "overNumber": 92,
+            "runrate": 4.33,
+            "runsConceded": 9,
+            "wickets": 0,
+            "totalInningRuns": 398,
+            "totalInningWickets": 3,
+            "totalRuns": 9
+          },
+          {
+            "id": 1590969,
+            "overNumber": 93,
+            "runrate": 4.33,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 403,
+            "totalInningWickets": 3,
+            "totalRuns": 5
+          },
+          {
+            "id": 1590970,
+            "overNumber": 94,
+            "runrate": 4.38,
+            "runsConceded": 9,
+            "wickets": 0,
+            "totalInningRuns": 412,
+            "totalInningWickets": 3,
+            "totalRuns": 9
+          },
+          {
+            "id": 1590971,
+            "overNumber": 95,
+            "runrate": 4.35,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 413,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590972,
+            "overNumber": 96,
+            "runrate": 4.38,
+            "runsConceded": 7,
+            "wickets": 1,
+            "totalInningRuns": 420,
+            "totalInningWickets": 4,
+            "totalRuns": 7
+          },
+          {
+            "id": 1590973,
+            "overNumber": 97,
+            "runrate": 4.34,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 421,
+            "totalInningWickets": 4,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590974,
+            "overNumber": 98,
+            "runrate": 4.39,
+            "runsConceded": 9,
+            "wickets": 0,
+            "totalInningRuns": 430,
+            "totalInningWickets": 4,
+            "totalRuns": 9
+          },
+          {
+            "id": 1590975,
+            "overNumber": 99,
+            "runrate": 4.37,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 433,
+            "totalInningWickets": 4,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590976,
+            "overNumber": 100,
+            "runrate": 4.4,
+            "runsConceded": 7,
+            "wickets": 0,
+            "totalInningRuns": 440,
+            "totalInningWickets": 4,
+            "totalRuns": 7
+          },
+          {
+            "id": 1590977,
+            "overNumber": 101,
+            "runrate": 4.43,
+            "runsConceded": 7,
+            "wickets": 0,
+            "totalInningRuns": 447,
+            "totalInningWickets": 4,
+            "totalRuns": 7
+          },
+          {
+            "id": 1590978,
+            "overNumber": 102,
+            "runrate": 4.47,
+            "runsConceded": 9,
+            "wickets": 1,
+            "totalInningRuns": 456,
+            "totalInningWickets": 5,
+            "totalRuns": 9
+          },
+          {
+            "id": 1590979,
+            "overNumber": 103,
+            "runrate": 4.43,
+            "runsConceded": 0,
+            "wickets": 1,
+            "totalInningRuns": 456,
+            "totalInningWickets": 6,
+            "totalRuns": 0
+          },
+          {
+            "id": 1590980,
+            "overNumber": 104,
+            "runrate": 4.38,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 456,
+            "totalInningWickets": 6,
+            "totalRuns": 0
+          },
+          {
+            "id": 1590981,
+            "overNumber": 105,
+            "runrate": 4.38,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 460,
+            "totalInningWickets": 6,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590982,
+            "overNumber": 106,
+            "runrate": 4.37,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 463,
+            "totalInningWickets": 6,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590983,
+            "overNumber": 107,
+            "runrate": 4.34,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 464,
+            "totalInningWickets": 6,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590984,
+            "overNumber": 108,
+            "runrate": 4.35,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 470,
+            "totalInningWickets": 6,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590985,
+            "overNumber": 109,
+            "runrate": 4.35,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 474,
+            "totalInningWickets": 6,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590986,
+            "overNumber": 110,
+            "runrate": 4.32,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 475,
+            "totalInningWickets": 6,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590987,
+            "overNumber": 111,
+            "runrate": 4.34,
+            "runsConceded": 7,
+            "wickets": 0,
+            "totalInningRuns": 482,
+            "totalInningWickets": 6,
+            "totalRuns": 7
+          },
+          {
+            "id": 1590988,
+            "overNumber": 112,
+            "runrate": 4.38,
+            "runsConceded": 9,
+            "wickets": 0,
+            "totalInningRuns": 491,
+            "totalInningWickets": 6,
+            "totalRuns": 9
+          },
+          {
+            "id": 1590989,
+            "overNumber": 113,
+            "runrate": 4.45,
+            "runsConceded": 12,
+            "wickets": 0,
+            "totalInningRuns": 503,
+            "totalInningWickets": 6,
+            "totalRuns": 12
+          },
+          {
+            "id": 1590990,
+            "overNumber": 114,
+            "runrate": 4.41,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 503,
+            "totalInningWickets": 6,
+            "totalRuns": 0
+          },
+          {
+            "id": 1590991,
+            "overNumber": 115,
+            "runrate": 4.39,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 505,
+            "totalInningWickets": 6,
+            "totalRuns": 2
+          },
+          {
+            "id": 1590992,
+            "overNumber": 116,
+            "runrate": 4.39,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 509,
+            "totalInningWickets": 6,
+            "totalRuns": 4
+          },
+          {
+            "id": 1590993,
+            "overNumber": 117,
+            "runrate": 4.36,
+            "runsConceded": 1,
+            "wickets": 1,
+            "totalInningRuns": 510,
+            "totalInningWickets": 7,
+            "totalRuns": 1
+          },
+          {
+            "id": 1590994,
+            "overNumber": 118,
+            "runrate": 4.36,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 515,
+            "totalInningWickets": 7,
+            "totalRuns": 5
+          },
+          {
+            "id": 1590995,
+            "overNumber": 119,
+            "runrate": 4.38,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 521,
+            "totalInningWickets": 7,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590996,
+            "overNumber": 120,
+            "runrate": 4.46,
+            "runsConceded": 14,
+            "wickets": 0,
+            "totalInningRuns": 535,
+            "totalInningWickets": 7,
+            "totalRuns": 14
+          },
+          {
+            "id": 1590997,
+            "overNumber": 121,
+            "runrate": 4.47,
+            "runsConceded": 6,
+            "wickets": 1,
+            "totalInningRuns": 541,
+            "totalInningWickets": 8,
+            "totalRuns": 6
+          },
+          {
+            "id": 1590998,
+            "overNumber": 122,
+            "runrate": 4.46,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 544,
+            "totalInningWickets": 8,
+            "totalRuns": 3
+          },
+          {
+            "id": 1590999,
+            "overNumber": 123,
+            "runrate": 4.42,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 544,
+            "totalInningWickets": 8,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591000,
+            "overNumber": 124,
+            "runrate": 4.4,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 545,
+            "totalInningWickets": 8,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591001,
+            "overNumber": 125,
+            "runrate": 4.41,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 551,
+            "totalInningWickets": 8,
+            "totalRuns": 6
+          },
+          {
+            "id": 1591002,
+            "overNumber": 126,
+            "runrate": 4.39,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 553,
+            "totalInningWickets": 8,
+            "totalRuns": 2
+          },
+          {
+            "id": 1591003,
+            "overNumber": 127,
+            "runrate": 4.44,
+            "runsConceded": 11,
+            "wickets": 0,
+            "totalInningRuns": 564,
+            "totalInningWickets": 8,
+            "totalRuns": 11
+          }
+        ],
+        "isDeclared": true,
+        "isFollowOn": false,
+        "isForfeited": false,
+        "overnightRuns": 0,
+        "overnightWickets": 0,
+        "byesRuns": 4,
+        "legByesRuns": 13,
+        "noBalls": 4,
+        "penalties": 0,
+        "totalExtras": 22,
+        "wideBalls": 1,
+        "oversBowled": "127.0",
+        "balls": 762,
+        "runsScored": 564,
+        "currentRunRate": 4.44,
+        "numberOfWicketsFallen": 8,
+        "day": 1,
+        "duckworthLewisOvers": ""
+      },
+      {
+        "id": 74941,
+        "fixtureId": 40038,
+        "inningNumber": 2,
+        "battingTeamId": 6,
+        "bowlingTeamId": 3,
+        "overs": [
+          {
+            "id": 1591004,
+            "overNumber": 1,
+            "runrate": 1,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 1,
+            "totalInningWickets": 0,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591005,
+            "overNumber": 2,
+            "runrate": 2,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 4,
+            "totalInningWickets": 0,
+            "totalRuns": 3
+          },
+          {
+            "id": 1591006,
+            "overNumber": 3,
+            "runrate": 4.33,
+            "runsConceded": 9,
+            "wickets": 0,
+            "totalInningRuns": 13,
+            "totalInningWickets": 0,
+            "totalRuns": 9
+          },
+          {
+            "id": 1591007,
+            "overNumber": 4,
+            "runrate": 5,
+            "runsConceded": 7,
+            "wickets": 0,
+            "totalInningRuns": 20,
+            "totalInningWickets": 0,
+            "totalRuns": 7
+          },
+          {
+            "id": 1591008,
+            "overNumber": 5,
+            "runrate": 5.6,
+            "runsConceded": 8,
+            "wickets": 0,
+            "totalInningRuns": 28,
+            "totalInningWickets": 0,
+            "totalRuns": 8
+          },
+          {
+            "id": 1591009,
+            "overNumber": 6,
+            "runrate": 4.67,
+            "runsConceded": 0,
+            "wickets": 1,
+            "totalInningRuns": 28,
+            "totalInningWickets": 1,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591010,
+            "overNumber": 7,
+            "runrate": 4.29,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 30,
+            "totalInningWickets": 1,
+            "totalRuns": 2
+          },
+          {
+            "id": 1591011,
+            "overNumber": 8,
+            "runrate": 4.5,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 36,
+            "totalInningWickets": 1,
+            "totalRuns": 6
+          },
+          {
+            "id": 1591012,
+            "overNumber": 9,
+            "runrate": 4.67,
+            "runsConceded": 6,
+            "wickets": 1,
+            "totalInningRuns": 42,
+            "totalInningWickets": 2,
+            "totalRuns": 6
+          },
+          {
+            "id": 1591013,
+            "overNumber": 10,
+            "runrate": 4.2,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 42,
+            "totalInningWickets": 2,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591014,
+            "overNumber": 11,
+            "runrate": 4,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 44,
+            "totalInningWickets": 2,
+            "totalRuns": 2
+          },
+          {
+            "id": 1591015,
+            "overNumber": 12,
+            "runrate": 3.67,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 44,
+            "totalInningWickets": 2,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591016,
+            "overNumber": 13,
+            "runrate": 3.69,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 48,
+            "totalInningWickets": 2,
+            "totalRuns": 4
+          },
+          {
+            "id": 1591020,
+            "overNumber": 14,
+            "runrate": 3.5,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 49,
+            "totalInningWickets": 2,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591023,
+            "overNumber": 15,
+            "runrate": 3.53,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 53,
+            "totalInningWickets": 2,
+            "totalRuns": 4
+          },
+          {
+            "id": 1591028,
+            "overNumber": 16,
+            "runrate": 3.38,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 54,
+            "totalInningWickets": 2,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591033,
+            "overNumber": 17,
+            "runrate": 3.29,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 56,
+            "totalInningWickets": 2,
+            "totalRuns": 2
+          },
+          {
+            "id": 1591038,
+            "overNumber": 18,
+            "runrate": 3.11,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 56,
+            "totalInningWickets": 2,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591047,
+            "overNumber": 19,
+            "runrate": 3.26,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 62,
+            "totalInningWickets": 2,
+            "totalRuns": 6
+          },
+          {
+            "id": 1591051,
+            "overNumber": 20,
+            "runrate": 3.1,
+            "runsConceded": 0,
+            "wickets": 1,
+            "totalInningRuns": 62,
+            "totalInningWickets": 3,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591058,
+            "overNumber": 21,
+            "runrate": 3,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 63,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591066,
+            "overNumber": 22,
+            "runrate": 2.91,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 64,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591073,
+            "overNumber": 23,
+            "runrate": 2.96,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 68,
+            "totalInningWickets": 3,
+            "totalRuns": 4
+          },
+          {
+            "id": 1591081,
+            "overNumber": 24,
+            "runrate": 2.88,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 69,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591088,
+            "overNumber": 25,
+            "runrate": 3.08,
+            "runsConceded": 8,
+            "wickets": 0,
+            "totalInningRuns": 77,
+            "totalInningWickets": 3,
+            "totalRuns": 8
+          },
+          {
+            "id": 1591099,
+            "overNumber": 26,
+            "runrate": 3.12,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 81,
+            "totalInningWickets": 3,
+            "totalRuns": 4
+          },
+          {
+            "id": 1591111,
+            "overNumber": 27,
+            "runrate": 3.04,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 82,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591133,
+            "overNumber": 28,
+            "runrate": 3.14,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 88,
+            "totalInningWickets": 3,
+            "totalRuns": 6
+          },
+          {
+            "id": 1591141,
+            "overNumber": 29,
+            "runrate": 3.21,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 93,
+            "totalInningWickets": 3,
+            "totalRuns": 5
+          },
+          {
+            "id": 1591152,
+            "overNumber": 30,
+            "runrate": 3.1,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 93,
+            "totalInningWickets": 3,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591160,
+            "overNumber": 31,
+            "runrate": 3,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 93,
+            "totalInningWickets": 3,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591173,
+            "overNumber": 32,
+            "runrate": 2.94,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 94,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591186,
+            "overNumber": 33,
+            "runrate": 2.97,
+            "runsConceded": 4,
+            "wickets": 1,
+            "totalInningRuns": 98,
+            "totalInningWickets": 4,
+            "totalRuns": 4
+          },
+          {
+            "id": 1591201,
+            "overNumber": 34,
+            "runrate": 3,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 102,
+            "totalInningWickets": 4,
+            "totalRuns": 4
+          },
+          {
+            "id": 1591209,
+            "overNumber": 35,
+            "runrate": 3,
+            "runsConceded": 3,
+            "wickets": 0,
+            "totalInningRuns": 105,
+            "totalInningWickets": 4,
+            "totalRuns": 3
+          },
+          {
+            "id": 1591218,
+            "overNumber": 36,
+            "runrate": 2.92,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 105,
+            "totalInningWickets": 4,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591226,
+            "overNumber": 37,
+            "runrate": 3,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 111,
+            "totalInningWickets": 4,
+            "totalRuns": 6
+          },
+          {
+            "id": 1591235,
+            "overNumber": 38,
+            "runrate": 2.95,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 112,
+            "totalInningWickets": 4,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591242,
+            "overNumber": 39,
+            "runrate": 2.9,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 113,
+            "totalInningWickets": 4,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591253,
+            "overNumber": 40,
+            "runrate": 2.83,
+            "runsConceded": 0,
+            "wickets": 1,
+            "totalInningRuns": 113,
+            "totalInningWickets": 5,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591944,
+            "overNumber": 41,
+            "runrate": 2.76,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 113,
+            "totalInningWickets": 5,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591945,
+            "overNumber": 42,
+            "runrate": 2.69,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 113,
+            "totalInningWickets": 5,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591946,
+            "overNumber": 43,
+            "runrate": 2.65,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 114,
+            "totalInningWickets": 5,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591947,
+            "overNumber": 44,
+            "runrate": 2.68,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 118,
+            "totalInningWickets": 5,
+            "totalRuns": 4
+          },
+          {
+            "id": 1591948,
+            "overNumber": 45,
+            "runrate": 2.62,
+            "runsConceded": 0,
+            "wickets": 1,
+            "totalInningRuns": 118,
+            "totalInningWickets": 6,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591949,
+            "overNumber": 46,
+            "runrate": 2.59,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 119,
+            "totalInningWickets": 6,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591950,
+            "overNumber": 47,
+            "runrate": 2.72,
+            "runsConceded": 9,
+            "wickets": 0,
+            "totalInningRuns": 128,
+            "totalInningWickets": 6,
+            "totalRuns": 9
+          },
+          {
+            "id": 1591951,
+            "overNumber": 48,
+            "runrate": 2.67,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 128,
+            "totalInningWickets": 6,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591952,
+            "overNumber": 49,
+            "runrate": 2.69,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 132,
+            "totalInningWickets": 6,
+            "totalRuns": 4
+          },
+          {
+            "id": 1591953,
+            "overNumber": 50,
+            "runrate": 2.64,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 132,
+            "totalInningWickets": 6,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591954,
+            "overNumber": 51,
+            "runrate": 2.61,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 133,
+            "totalInningWickets": 6,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591955,
+            "overNumber": 52,
+            "runrate": 2.58,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 134,
+            "totalInningWickets": 6,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591956,
+            "overNumber": 53,
+            "runrate": 2.53,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 134,
+            "totalInningWickets": 6,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591957,
+            "overNumber": 54,
+            "runrate": 2.52,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 136,
+            "totalInningWickets": 6,
+            "totalRuns": 2
+          },
+          {
+            "id": 1591958,
+            "overNumber": 55,
+            "runrate": 2.58,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 142,
+            "totalInningWickets": 6,
+            "totalRuns": 6
+          },
+          {
+            "id": 1591959,
+            "overNumber": 56,
+            "runrate": 2.55,
+            "runsConceded": 1,
+            "wickets": 1,
+            "totalInningRuns": 143,
+            "totalInningWickets": 7,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591960,
+            "overNumber": 57,
+            "runrate": 2.51,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 143,
+            "totalInningWickets": 7,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591961,
+            "overNumber": 58,
+            "runrate": 2.57,
+            "runsConceded": 6,
+            "wickets": 2,
+            "totalInningRuns": 149,
+            "totalInningWickets": 9,
+            "totalRuns": 6
+          },
+          {
+            "id": 1591962,
+            "overNumber": 59,
+            "runrate": 2.58,
+            "runsConceded": 3,
+            "wickets": 1,
+            "totalInningRuns": 152,
+            "totalInningWickets": 10,
+            "totalRuns": 3
+          }
+        ],
+        "isDeclared": false,
+        "isFollowOn": false,
+        "isForfeited": false,
+        "overnightRuns": 0,
+        "overnightWickets": 0,
+        "byesRuns": 0,
+        "legByesRuns": 0,
+        "noBalls": 2,
+        "penalties": 0,
+        "totalExtras": 3,
+        "wideBalls": 1,
+        "oversBowled": "58.4",
+        "balls": 352,
+        "runsScored": 152,
+        "requiredRunRate": 0,
+        "currentRunRate": 2.59,
+        "numberOfWicketsFallen": 10,
+        "day": 1,
+        "duckworthLewisOvers": ""
+      },
+      {
+        "id": 74982,
+        "fixtureId": 40038,
+        "inningNumber": 3,
+        "battingTeamId": 6,
+        "bowlingTeamId": 3,
+        "overs": [
+          {
+            "id": 1591963,
+            "overNumber": 1,
+            "runrate": 4,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 4,
+            "totalInningWickets": 0,
+            "totalRuns": 4
+          },
+          {
+            "id": 1591964,
+            "overNumber": 2,
+            "runrate": 3,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 6,
+            "totalInningWickets": 0,
+            "totalRuns": 2
+          },
+          {
+            "id": 1591965,
+            "overNumber": 3,
+            "runrate": 6,
+            "runsConceded": 12,
+            "wickets": 0,
+            "totalInningRuns": 18,
+            "totalInningWickets": 0,
+            "totalRuns": 12
+          },
+          {
+            "id": 1591966,
+            "overNumber": 4,
+            "runrate": 4.5,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 18,
+            "totalInningWickets": 0,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591967,
+            "overNumber": 5,
+            "runrate": 3.8,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 19,
+            "totalInningWickets": 0,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591968,
+            "overNumber": 6,
+            "runrate": 3.5,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 21,
+            "totalInningWickets": 0,
+            "totalRuns": 2
+          },
+          {
+            "id": 1591969,
+            "overNumber": 7,
+            "runrate": 3,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 21,
+            "totalInningWickets": 0,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591970,
+            "overNumber": 8,
+            "runrate": 2.88,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 23,
+            "totalInningWickets": 0,
+            "totalRuns": 2
+          },
+          {
+            "id": 1591971,
+            "overNumber": 9,
+            "runrate": 2.78,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 25,
+            "totalInningWickets": 0,
+            "totalRuns": 2
+          },
+          {
+            "id": 1591972,
+            "overNumber": 10,
+            "runrate": 2.9,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 29,
+            "totalInningWickets": 0,
+            "totalRuns": 4
+          },
+          {
+            "id": 1591973,
+            "overNumber": 11,
+            "runrate": 2.82,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 31,
+            "totalInningWickets": 0,
+            "totalRuns": 2
+          },
+          {
+            "id": 1591974,
+            "overNumber": 12,
+            "runrate": 3.08,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 37,
+            "totalInningWickets": 0,
+            "totalRuns": 6
+          },
+          {
+            "id": 1591975,
+            "overNumber": 13,
+            "runrate": 3.23,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 42,
+            "totalInningWickets": 0,
+            "totalRuns": 5
+          },
+          {
+            "id": 1591976,
+            "overNumber": 14,
+            "runrate": 3.07,
+            "runsConceded": 1,
+            "wickets": 1,
+            "totalInningRuns": 43,
+            "totalInningWickets": 1,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591977,
+            "overNumber": 15,
+            "runrate": 3.27,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 49,
+            "totalInningWickets": 1,
+            "totalRuns": 6
+          },
+          {
+            "id": 1591978,
+            "overNumber": 16,
+            "runrate": 3.06,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 49,
+            "totalInningWickets": 1,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591979,
+            "overNumber": 17,
+            "runrate": 3.29,
+            "runsConceded": 7,
+            "wickets": 0,
+            "totalInningRuns": 56,
+            "totalInningWickets": 1,
+            "totalRuns": 7
+          },
+          {
+            "id": 1591980,
+            "overNumber": 18,
+            "runrate": 3.89,
+            "runsConceded": 14,
+            "wickets": 0,
+            "totalInningRuns": 70,
+            "totalInningWickets": 1,
+            "totalRuns": 14
+          },
+          {
+            "id": 1591981,
+            "overNumber": 19,
+            "runrate": 3.89,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 74,
+            "totalInningWickets": 1,
+            "totalRuns": 4
+          },
+          {
+            "id": 1591982,
+            "overNumber": 20,
+            "runrate": 3.85,
+            "runsConceded": 3,
+            "wickets": 1,
+            "totalInningRuns": 77,
+            "totalInningWickets": 2,
+            "totalRuns": 3
+          },
+          {
+            "id": 1591983,
+            "overNumber": 21,
+            "runrate": 4,
+            "runsConceded": 7,
+            "wickets": 0,
+            "totalInningRuns": 84,
+            "totalInningWickets": 2,
+            "totalRuns": 7
+          },
+          {
+            "id": 1591984,
+            "overNumber": 22,
+            "runrate": 3.86,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 85,
+            "totalInningWickets": 2,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591985,
+            "overNumber": 23,
+            "runrate": 3.78,
+            "runsConceded": 2,
+            "wickets": 1,
+            "totalInningRuns": 87,
+            "totalInningWickets": 3,
+            "totalRuns": 2
+          },
+          {
+            "id": 1591986,
+            "overNumber": 24,
+            "runrate": 3.67,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 88,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591987,
+            "overNumber": 25,
+            "runrate": 3.52,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 88,
+            "totalInningWickets": 3,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591988,
+            "overNumber": 26,
+            "runrate": 3.58,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 93,
+            "totalInningWickets": 3,
+            "totalRuns": 5
+          },
+          {
+            "id": 1591989,
+            "overNumber": 27,
+            "runrate": 3.59,
+            "runsConceded": 4,
+            "wickets": 1,
+            "totalInningRuns": 97,
+            "totalInningWickets": 4,
+            "totalRuns": 4
+          },
+          {
+            "id": 1591990,
+            "overNumber": 28,
+            "runrate": 3.5,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 98,
+            "totalInningWickets": 4,
+            "totalRuns": 1
+          },
+          {
+            "id": 1591991,
+            "overNumber": 29,
+            "runrate": 3.38,
+            "runsConceded": 0,
+            "wickets": 1,
+            "totalInningRuns": 98,
+            "totalInningWickets": 5,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591992,
+            "overNumber": 30,
+            "runrate": 3.27,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 98,
+            "totalInningWickets": 5,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591993,
+            "overNumber": 31,
+            "runrate": 3.35,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 104,
+            "totalInningWickets": 5,
+            "totalRuns": 6
+          },
+          {
+            "id": 1591994,
+            "overNumber": 32,
+            "runrate": 3.31,
+            "runsConceded": 2,
+            "wickets": 1,
+            "totalInningRuns": 106,
+            "totalInningWickets": 6,
+            "totalRuns": 2
+          },
+          {
+            "id": 1591995,
+            "overNumber": 33,
+            "runrate": 3.21,
+            "runsConceded": 0,
+            "wickets": 1,
+            "totalInningRuns": 106,
+            "totalInningWickets": 7,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591996,
+            "overNumber": 34,
+            "runrate": 3.29,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 112,
+            "totalInningWickets": 7,
+            "totalRuns": 6
+          },
+          {
+            "id": 1591997,
+            "overNumber": 35,
+            "runrate": 3.2,
+            "runsConceded": 0,
+            "wickets": 0,
+            "totalInningRuns": 112,
+            "totalInningWickets": 7,
+            "totalRuns": 0
+          },
+          {
+            "id": 1591998,
+            "overNumber": 36,
+            "runrate": 3.11,
+            "runsConceded": 0,
+            "wickets": 2,
+            "totalInningRuns": 112,
+            "totalInningWickets": 9,
+            "totalRuns": 0
+          }
+        ],
+        "isDeclared": false,
+        "isFollowOn": false,
+        "isForfeited": false,
+        "overnightRuns": 0,
+        "overnightWickets": 0,
+        "byesRuns": 0,
+        "legByesRuns": 0,
+        "noBalls": 2,
+        "penalties": 0,
+        "totalExtras": 2,
+        "wideBalls": 0,
+        "oversBowled": "35.5",
+        "balls": 215,
+        "runsScored": 112,
+        "requiredRunRate": 0,
+        "currentRunRate": 3.12,
+        "numberOfWicketsFallen": 10,
+        "day": 1,
+        "duckworthLewisOvers": ""
+      }
+    ],
+    "id": 40038,
+    "name": "Only Test",
+    "startDateTime": "2026-06-06T04:00:00Z",
+    "endDateTime": "2026-06-08T11:00:00Z",
+    "gameTypeId": 1,
+    "isLive": false,
+    "isCompleted": true,
+    "isDuckworthLewis": false,
+    "numberOfDays": 5,
+    "resultText": "India win by an innings and 300 runs",
+    "competitionId": 4585,
+    "venueId": 646,
+    "homeTeamId": 3,
+    "awayTeamId": 6,
+    "legacyFixtureId": 67207,
+    "isInProgress": false,
+    "totalOvers": "90",
+    "totalBalls": 6
+  },
+  "fixtureTitle": {
+    "fixtureName": "Only Test",
+    "score": "IND v AFG 112"
+  }
+}

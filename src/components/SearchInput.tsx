@@ -10,7 +10,7 @@ export const SearchInput = ({ value, onChange }: SearchInputProps) => {
       <input
         type="search"
         value={value}
-        placeholder="Search by player name"
+        placeholder="Search by name, country, or role"
         onChange={(event) => onChange(event.target.value)}
       />
     </label>

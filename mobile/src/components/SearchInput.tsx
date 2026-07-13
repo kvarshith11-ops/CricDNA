@@ -12,7 +12,7 @@ export const SearchInput = ({ value, onChange }: SearchInputProps) => {
       <Text style={styles.label}>Search players</Text>
       <TextInput
         value={value}
-        placeholder="Search by player name"
+        placeholder="Search by name, country, or role"
         placeholderTextColor={colors.muted}
         onChangeText={onChange}
         style={styles.input}

@@ -1,49 +1,344 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { ScoreCircle } from '../components/ScoreCircle'
 import { StatCard } from '../components/StatCard'
 import { StatusMessage } from '../components/StatusMessage'
+import type {
+  PlayerProfileBattingPhaseStat,
+  PlayerProfileBowlingPhaseStat,
+  PlayerProfileRecentMatch,
+  PlayerProfileRole,
+  PlayerProfileSummary,
+} from '../types/aiScout'
+import type { Player } from '../types/player'
 import { ViewState } from '../types/viewState'
+import { visibleDnaObservationGroupsFor } from '../utils/dnaObservations'
 import { usePlayerInsightsViewModel } from '../viewmodels/usePlayerInsightsViewModel'
 
+interface PlayerRouteState {
+  player?: Player
+}
+
+const hasDisplayValue = (value: number | string | null | undefined): boolean => {
+  return value !== null && value !== undefined && value !== ''
+}
+
+const displayStatValue = (
+  label: string,
+  value: number | string | null | undefined,
+): string => {
+  if (value === null || value === undefined || value === '') {
+    return ''
+  }
+
+  if (typeof value === 'number' && label.toLowerCase().includes('average')) {
+    return value.toFixed(2)
+  }
+
+  if (typeof value === 'number' && label.toLowerCase().includes('economy')) {
+    return value.toFixed(2)
+  }
+
+  return String(value)
+}
+
+const formatRole = (role: PlayerProfileRole | null): string => {
+  switch (role) {
+    case 'all_rounder':
+      return 'All-rounder'
+    case 'wicket_keeper':
+      return 'Wicket keeper'
+    case 'batter':
+      return 'Batter'
+    case 'bowler':
+      return 'Bowler'
+    default:
+      return ''
+  }
+}
+
+const trendIcon = (trend: PlayerProfileSummary['trend']): string => {
+  switch (trend.label) {
+    case 'Strong':
+      return '▲'
+    case 'Weak':
+      return '▼'
+    case 'Stable':
+      return '→'
+    case 'Insufficient Data':
+      return '•'
+    default:
+      break
+  }
+
+  switch (trend.direction) {
+    case 'up':
+      return '↗'
+    case 'down':
+      return '↘'
+    case 'flat':
+      return '→'
+    default:
+      return '•'
+  }
+}
+
+const snapshotStatsFor = (profile: PlayerProfileSummary) => {
+  const stats = profile.headlineStats
+
+  switch (profile.identity.role) {
+    case 'bowler':
+      return [
+        { label: 'Matches', value: stats.matches },
+        { label: 'Wickets', value: stats.wickets },
+        { label: 'Economy', value: stats.economy },
+        { label: 'Best Bowling', value: stats.bestBowling },
+      ]
+    case 'wicket_keeper':
+      return [
+        { label: 'Matches', value: stats.matches },
+        { label: 'Runs', value: stats.runs },
+        { label: 'Average', value: stats.battingAverage },
+        { label: 'Keeper Dismissals', value: stats.keeperDismissals },
+      ]
+    case 'all_rounder':
+      return [
+        { label: 'Matches', value: stats.matches },
+        { label: 'Runs', value: stats.runs },
+        { label: 'Average', value: stats.battingAverage },
+        { label: 'Wickets', value: stats.wickets },
+        { label: 'Economy', value: stats.economy },
+        { label: 'Best Score', value: stats.bestScore },
+        { label: 'Best Bowling', value: stats.bestBowling },
+      ]
+    case 'batter':
+    default:
+      return [
+        { label: 'Matches', value: stats.matches },
+        { label: 'Runs', value: stats.runs },
+        { label: 'Average', value: stats.battingAverage },
+        { label: 'Best Score', value: stats.bestScore },
+      ]
+  }
+}
+
+const visibleSnapshotStatsFor = (profile: PlayerProfileSummary) => {
+  return snapshotStatsFor(profile).filter((stat) => hasDisplayValue(stat.value))
+}
+
+const formatNullableNumber = (
+  value: number | null,
+  digits = 2,
+): string => {
+  return value === null ? '—' : value.toFixed(digits)
+}
+
+const formatNullablePercentage = (value: number | null): string => {
+  return value === null ? '—' : `${value.toFixed(1)}%`
+}
+
+const formatOversFromBalls = (balls: number): string => {
+  const overs = Math.floor(balls / 6)
+  const remainingBalls = balls % 6
+
+  return remainingBalls === 0 ? String(overs) : `${overs}.${remainingBalls}`
+}
+
+const visiblePhaseGroupsFor = (profile: PlayerProfileSummary) => {
+  const groups: Array<
+    | {
+        kind: 'batting'
+        label: string
+        phases: PlayerProfileBattingPhaseStat[]
+      }
+    | {
+        kind: 'bowling'
+        label: string
+        phases: PlayerProfileBowlingPhaseStat[]
+      }
+  > = []
+
+  if (
+    ['batter', 'wicket_keeper', 'all_rounder'].includes(profile.identity.role ?? '') &&
+    profile.phaseAnalysis.batting.length > 0
+  ) {
+    groups.push({
+      kind: 'batting',
+      label: 'Batting phases',
+      phases: profile.phaseAnalysis.batting,
+    })
+  }
+
+  if (
+    ['bowler', 'all_rounder'].includes(profile.identity.role ?? '') &&
+    profile.phaseAnalysis.bowling.length > 0
+  ) {
+    groups.push({
+      kind: 'bowling',
+      label: 'Bowling phases',
+      phases: profile.phaseAnalysis.bowling,
+    })
+  }
+
+  return groups
+}
+
+const profileDetailPillsFor = (profile: PlayerProfileSummary): string[] => {
+  return [
+    profile.identity.country,
+    profile.identity.role ? formatRole(profile.identity.role) : null,
+    profile.identity.age === null ? null : `${profile.identity.age} years`,
+  ].filter((value): value is string => hasDisplayValue(value))
+}
+
+const recentPerformanceFor = (
+  role: PlayerProfileRole | null,
+  match: PlayerProfileRecentMatch,
+): string => {
+  const batting = match.runs === null ? '' : `${match.runs} runs`
+  const bowling =
+    match.wickets === null || match.bowlingRunsConceded === null
+      ? ''
+      : `${match.wickets}/${match.bowlingRunsConceded}`
+
+  if (role === 'bowler') {
+    return bowling
+  }
+
+  if (role === 'all_rounder') {
+    return [batting, bowling].filter(Boolean).join(', ')
+  }
+
+  return match.runs === null ? '' : String(match.runs)
+}
+
+const formatMatchDate = (date: string): string => {
+  const parsed = new Date(date)
+
+  if (Number.isNaN(parsed.getTime())) {
+    return date
+  }
+
+  return new Intl.DateTimeFormat('en', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).format(parsed)
+}
+
+const PhaseAnalysis = ({ profile }: { profile: PlayerProfileSummary }) => {
+  const groups = visiblePhaseGroupsFor(profile)
+
+  if (groups.length === 0) {
+    return null
+  }
+
+  return (
+    <div className="phase-analysis">
+      <div>
+        <h3>Match Phase Analysis</h3>
+        <p>Performance split by match phase</p>
+      </div>
+      {groups.map((group) => (
+        <div className="phase-group" key={group.kind}>
+          <p className="eyebrow">{group.label}</p>
+          <div className="phase-grid">
+            {group.phases.map((phase) => (
+              <article
+                className={`phase-card phase-${phase.phase.toLowerCase()}`}
+                key={`${group.kind}-${phase.phase}`}
+              >
+                <h4>{phase.phase}</h4>
+                {group.kind === 'bowling' ? (
+                  (() => {
+                    const bowlingPhase = phase as PlayerProfileBowlingPhaseStat
+
+                    return (
+                      <>
+                        <strong>{bowlingPhase.wickets}</strong>
+                        <span>wickets</span>
+                        <div className="phase-stat-grid">
+                          <span>Economy <b>{formatNullableNumber(bowlingPhase.economy)}</b></span>
+                          <span>Dot % <b>{formatNullablePercentage(bowlingPhase.dotPercentage)}</b></span>
+                          <span>Overs <b>{formatOversFromBalls(bowlingPhase.balls)}</b></span>
+                          <span>Average <b>{formatNullableNumber(bowlingPhase.average)}</b></span>
+                        </div>
+                      </>
+                    )
+                  })()
+                ) : (
+                  (() => {
+                    const battingPhase = phase as PlayerProfileBattingPhaseStat
+
+                    return (
+                      <>
+                        <strong>{battingPhase.runs}</strong>
+                        <span>runs</span>
+                        <div className="phase-stat-grid">
+                          <span>Strike Rate <b>{formatNullableNumber(battingPhase.strikeRate)}</b></span>
+                          <span>Dot % <b>{formatNullablePercentage(battingPhase.dotPercentage)}</b></span>
+                          <span>Balls <b>{battingPhase.balls}</b></span>
+                          <span>Dismissals <b>{battingPhase.dismissals}</b></span>
+                        </div>
+                      </>
+                    )
+                  })()
+                )}
+              </article>
+            ))}
+          </div>
+        </div>
+      ))}
+      {profile.phaseAnalysis.coverage.hasIncompleteCommentary ? (
+        <p className="phase-note">
+          Phase splits use available commentary data; some matches indicate additional commentary pages.
+        </p>
+      ) : null}
+    </div>
+  )
+}
+
 export const PlayerDetailsPage = () => {
-  const { insights, recentMatches, viewState, errorMessage } =
-    usePlayerInsightsViewModel()
+  const { id } = useParams<{ id: string }>()
+  const location = useLocation()
+  const selectedPlayer = (location.state as PlayerRouteState | null)?.player
+  const { report, viewState, errorMessage, retry } = usePlayerInsightsViewModel()
 
   if (viewState === ViewState.Idle || viewState === ViewState.Loading) {
     return (
       <main className="app-shell">
         <StatusMessage
-          title="Loading insights"
-          message="Preparing the player analytics profile."
+          title="Generating CricDNA report"
+          message="Building deterministic evidence, applying guardrails, and validating the AI Scout response."
         />
       </main>
     )
   }
 
-  if (viewState === ViewState.Error || !insights) {
+  if (viewState === ViewState.Error || !report) {
     return (
       <main className="app-shell">
+        <Link className="back-link" to="/">
+          <span aria-hidden="true">&lt;</span>
+          Back to players
+        </Link>
         <StatusMessage
-          title="Could not load insights"
-          message={errorMessage || 'The local player insights mock is unavailable.'}
+          title="Could not generate CricDNA report"
+          message={
+            errorMessage ||
+            'The AI Scout response could not be generated or validated.'
+          }
+          actionLabel="Retry"
+          onAction={() => void retry()}
         />
       </main>
     )
   }
 
-  const headlineStats = [
-    { label: 'Matches', value: insights.headlineStats.matches.toLocaleString() },
-    { label: 'Runs', value: insights.headlineStats.runs.toLocaleString() },
-    {
-      label: 'Batting Average',
-      value: insights.headlineStats.battingAverage.toFixed(2),
-    },
-    {
-      label: 'Strike Rate',
-      value: insights.headlineStats.strikeRate.toFixed(2),
-    },
-    { label: 'Best Figure', value: insights.headlineStats.bestFigure },
-  ]
+  const { profile, scout, presentation } = report
+  const profileDetailPills = profileDetailPillsFor(profile)
+  const dnaObservationGroups = scout
+    ? visibleDnaObservationGroupsFor(profile.identity.role, scout.dnaObservations)
+    : []
 
   return (
     <main className="app-shell details-page">
@@ -54,143 +349,164 @@ export const PlayerDetailsPage = () => {
 
       <header className="player-hero">
         <div>
-          <p className="eyebrow">Player Header</p>
-          <h1>{insights.identity.name}</h1>
-          <div className="meta-row" aria-label="Player details">
-            <span>{insights.identity.country}</span>
-            <span>{insights.identity.role}</span>
-            <span>{insights.identity.age} years</span>
-          </div>
+          <h1>{selectedPlayer?.name ?? profile.identity.playerName ?? `Player ${id ?? ''}`}</h1>
+          {profileDetailPills.length > 0 ? (
+            <div className="meta-row" aria-label="Player details">
+              {profileDetailPills.map((pill) => (
+                <span key={pill}>{pill}</span>
+              ))}
+            </div>
+          ) : null}
         </div>
-        <div className="format-pill">{insights.meta.format}</div>
       </header>
 
-      <section className="dna-hero-card">
-        <ScoreCircle score={insights.cricketDNA.score} />
-        <div>
-          <p className="eyebrow">Cricket DNA Hero Card</p>
-          <h2>DNA Score</h2>
-          <div className="dna-labels">
-            <span>{insights.cricketDNA.tier}</span>
-            <strong>{insights.cricketDNA.archetype}</strong>
+      {scout ? (
+        <section className="dna-hero-card">
+          <div className="dna-score-panel">
+            <p className="eyebrow">DNA Score</p>
+            <ScoreCircle score={scout.dnaScore.score} />
           </div>
-          <p>{insights.cricketDNA.explanation}</p>
-        </div>
-      </section>
-
-      <section className="content-section">
-        <div className="section-title">
-          <p className="eyebrow">Headline Stats Cards</p>
-          <h2>Career Snapshot</h2>
-        </div>
-        <div className="stats-grid">
-          {headlineStats.map((stat) => (
-            <StatCard key={stat.label} label={stat.label} value={stat.value} />
-          ))}
-        </div>
-      </section>
-
-      <section className="content-section two-column">
-        <div className="section-title">
-          <p className="eyebrow">DNA Breakdown</p>
-          <h2>Score Contributors</h2>
-        </div>
-        <div className="breakdown-list">
-          {insights.cricketDNA.breakdown.map((item) => (
-            <div className="breakdown-row" key={item.metric}>
-              <div>
-                <strong>{item.metric}</strong>
-                <span>{item.contribution}% contribution</span>
-              </div>
-              <div className="progress-track" aria-hidden="true">
-                <span
-                  className="progress-fill"
-                  style={{ width: `${item.contribution}%` }}
-                />
-              </div>
+          <div>
+            <div className="dna-presentation-labels" aria-label="DNA classification">
+              {presentation.dnaTier ? (
+                <span>{presentation.dnaTier.label}</span>
+              ) : null}
+              {presentation.roleArchetype ? (
+                <strong>{presentation.roleArchetype.label}</strong>
+              ) : null}
             </div>
-          ))}
-        </div>
-      </section>
+            <p>{scout.dnaScore.explanation}</p>
+            {presentation.roleArchetype ? (
+              <p className="archetype-reason">
+                {presentation.roleArchetype.reason}
+              </p>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
+
+      {dnaObservationGroups.length > 0 ? (
+        <section className="content-section dna-observations-section">
+          <div className="section-title">
+            <h2>DNA Observations</h2>
+          </div>
+          <div className="dna-observation-groups">
+            {dnaObservationGroups.map((group) => (
+              <article className="dna-observation-group" key={group.category}>
+                <p className="eyebrow">{group.label}</p>
+                <div className="dna-observation-list">
+                  {group.observations.map((observation) => (
+                    <div
+                      className="dna-observation-card"
+                      key={`${group.category}-${observation.title}`}
+                    >
+                      <h3>{observation.title}</h3>
+                      <p>{observation.summary}</p>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {!profile.guardrails.eligible ? (
+        <StatusMessage
+          title="Insufficient match evidence"
+          message={
+            profile.guardrails.reasons[0] ||
+            `At least ${profile.guardrails.minimumRequiredMatches} matches are required.`
+          }
+        />
+      ) : null}
 
       <section className="trend-card">
         <div>
-          <p className="eyebrow">Trend Card</p>
-          <h2>{insights.trend.label}</h2>
+          <p className="eyebrow">Recent Trend</p>
+          <h2>
+            <span aria-hidden="true">{trendIcon(profile.trend)} </span>
+            {profile.trend.label}
+          </h2>
         </div>
-        <span className="confidence-pill">{insights.trend.confidence}</span>
-        <p>{insights.trend.reason}</p>
-      </section>
-
-      <section className="summary-card">
-        <p className="eyebrow">AI Summary Card</p>
-        <h2>Analyst Summary</h2>
-        <p>{insights.summary.note}</p>
-        <ul className="highlight-list">
-          {insights.summary.highlights.map((highlight) => (
-            <li key={highlight}>{highlight}</li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="profile-grid">
-        <article className="insight-card">
-          <p className="eyebrow">Strengths Section</p>
-          <h2>Strengths</h2>
-          {insights.profile.strengths.map((strength) => (
-            <div className="profile-item" key={strength.metric}>
-              <strong>{strength.metric}</strong>
-              <p>{strength.reason}</p>
-            </div>
-          ))}
-        </article>
-
-        <article className="insight-card">
-          <p className="eyebrow">Weaknesses Section</p>
-          <h2>Weaknesses</h2>
-          {insights.profile.weaknesses.map((weakness) => (
-            <div className="profile-item" key={weakness.metric}>
-              <strong>{weakness.metric}</strong>
-              <p>{weakness.reason}</p>
-            </div>
-          ))}
-        </article>
+        <span className="confidence-pill">
+          Last {profile.trend.recentMatchCount}
+        </span>
+        <p>{profile.trend.reason}</p>
+        <div className="recent-performance-table">
+          <h3>Recent Matches &amp; Performance</h3>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Opponent</th>
+                  <th>Performance</th>
+                  <th>POTM</th>
+                </tr>
+              </thead>
+              <tbody>
+                {profile.recentMatches.slice(0, 3).map((match) => (
+                  <tr key={match.matchId}>
+                    <td>{formatMatchDate(match.date)}</td>
+                    <td>{match.opponent.name}</td>
+                    <td>{recentPerformanceFor(profile.identity.role, match)}</td>
+                    <td>{match.playerOfMatch ? 'Yes' : 'No'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
 
       <section className="content-section">
         <div className="section-title">
-          <p className="eyebrow">Recent Matches Table</p>
-          <h2>Recent Matches</h2>
+          <h2>Career Snapshot</h2>
         </div>
-        <div className="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Opponent</th>
-                <th>Performance</th>
-                <th>Strike Rate</th>
-                <th>Result</th>
-                <th>Player of Match</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentMatches.map((match) => (
-                <tr key={`${match.date}-${match.opponent}`}>
-                  <td>{match.displayDate}</td>
-                  <td>{match.opponent}</td>
-                  <td>{match.performance}</td>
-                  <td>{match.strikeRate.toFixed(1)}</td>
-                  <td>
-                    <span className="result-pill">{match.result}</span>
-                  </td>
-                  <td>{match.playerOfMatch ? 'Yes' : 'No'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="stats-grid ratings-grid">
+          {visibleSnapshotStatsFor(profile).map((stat) => (
+            <StatCard
+              key={stat.label}
+              label={stat.label}
+              value={displayStatValue(stat.label, stat.value)}
+            />
+          ))}
         </div>
+        <PhaseAnalysis profile={profile} />
       </section>
+
+      {scout ? (
+        <>
+          <section className="profile-grid">
+            <article className="insight-card">
+              <p className="eyebrow">Strengths</p>
+              <h2>What Stands Out</h2>
+              <ul className="highlight-list">
+                {scout.strengths.map((strength) => (
+                  <li key={strength}>{strength}</li>
+                ))}
+              </ul>
+            </article>
+
+            <article className="insight-card">
+              <p className="eyebrow">Development Areas</p>
+              <h2>Growth Focus</h2>
+              <ul className="highlight-list">
+                {scout.developmentAreas.map((area) => (
+                  <li key={area}>{area}</li>
+                ))}
+              </ul>
+            </article>
+          </section>
+
+          <section className="summary-card">
+            <h2>Analyst Summary</h2>
+            <p>{scout.scoutingReport}</p>
+          </section>
+
+        </>
+      ) : null}
     </main>
   )
 }

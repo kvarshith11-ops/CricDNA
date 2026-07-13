@@ -1,0 +1,428 @@
+{
+  "fixture": {
+    "competition": {
+      "id": 4628,
+      "name": "Bangladesh v Australia T20Is 2026 - Men"
+    },
+    "homeTeam": {
+      "id": 637,
+      "name": "Bangladesh Men",
+      "shortName": "BAN",
+      "teamColor": "#006D4C",
+      "isWomensTeam": false
+    },
+    "awayTeam": {
+      "id": 23,
+      "name": "Australia Men",
+      "shortName": "AUS",
+      "teamColor": "#085251",
+      "isWomensTeam": false
+    },
+    "venue": {
+      "id": 582,
+      "name": "Bir Sreshtho Flight Lieutenant Matiur Rahman Stadium",
+      "city": "Chattogram"
+    },
+    "innings": [
+      {
+        "id": 75163,
+        "fixtureId": 40314,
+        "inningNumber": 1,
+        "battingTeamId": 637,
+        "bowlingTeamId": 23,
+        "overs": [
+          {
+            "id": 1599949,
+            "overNumber": 1,
+            "runrate": 6,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 6,
+            "totalInningWickets": 0,
+            "totalRuns": 6
+          },
+          {
+            "id": 1599950,
+            "overNumber": 2,
+            "runrate": 3.5,
+            "runsConceded": 1,
+            "wickets": 2,
+            "totalInningRuns": 7,
+            "totalInningWickets": 2,
+            "totalRuns": 1
+          },
+          {
+            "id": 1599951,
+            "overNumber": 3,
+            "runrate": 3,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 9,
+            "totalInningWickets": 2,
+            "totalRuns": 2
+          },
+          {
+            "id": 1599952,
+            "overNumber": 4,
+            "runrate": 2.5,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 10,
+            "totalInningWickets": 2,
+            "totalRuns": 1
+          },
+          {
+            "id": 1599953,
+            "overNumber": 5,
+            "runrate": 2.2,
+            "runsConceded": 1,
+            "wickets": 1,
+            "totalInningRuns": 11,
+            "totalInningWickets": 3,
+            "totalRuns": 1
+          },
+          {
+            "id": 1599954,
+            "overNumber": 6,
+            "runrate": 3.67,
+            "runsConceded": 11,
+            "wickets": 0,
+            "totalInningRuns": 22,
+            "totalInningWickets": 3,
+            "totalRuns": 11
+          },
+          {
+            "id": 1599955,
+            "overNumber": 7,
+            "runrate": 4.86,
+            "runsConceded": 12,
+            "wickets": 0,
+            "totalInningRuns": 34,
+            "totalInningWickets": 3,
+            "totalRuns": 12
+          },
+          {
+            "id": 1599956,
+            "overNumber": 8,
+            "runrate": 4.25,
+            "runsConceded": 0,
+            "wickets": 1,
+            "totalInningRuns": 34,
+            "totalInningWickets": 4,
+            "totalRuns": 0
+          },
+          {
+            "id": 1599957,
+            "overNumber": 9,
+            "runrate": 4.11,
+            "runsConceded": 3,
+            "wickets": 1,
+            "totalInningRuns": 37,
+            "totalInningWickets": 5,
+            "totalRuns": 3
+          },
+          {
+            "id": 1599958,
+            "overNumber": 10,
+            "runrate": 4.2,
+            "runsConceded": 5,
+            "wickets": 0,
+            "totalInningRuns": 42,
+            "totalInningWickets": 5,
+            "totalRuns": 5
+          },
+          {
+            "id": 1599959,
+            "overNumber": 11,
+            "runrate": 4.64,
+            "runsConceded": 9,
+            "wickets": 0,
+            "totalInningRuns": 51,
+            "totalInningWickets": 5,
+            "totalRuns": 9
+          },
+          {
+            "id": 1599960,
+            "overNumber": 12,
+            "runrate": 5.17,
+            "runsConceded": 11,
+            "wickets": 1,
+            "totalInningRuns": 62,
+            "totalInningWickets": 6,
+            "totalRuns": 11
+          },
+          {
+            "id": 1599961,
+            "overNumber": 13,
+            "runrate": 5,
+            "runsConceded": 3,
+            "wickets": 1,
+            "totalInningRuns": 65,
+            "totalInningWickets": 7,
+            "totalRuns": 3
+          },
+          {
+            "id": 1599962,
+            "overNumber": 14,
+            "runrate": 4.93,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 69,
+            "totalInningWickets": 7,
+            "totalRuns": 4
+          },
+          {
+            "id": 1599963,
+            "overNumber": 15,
+            "runrate": 4.87,
+            "runsConceded": 4,
+            "wickets": 0,
+            "totalInningRuns": 73,
+            "totalInningWickets": 7,
+            "totalRuns": 4
+          },
+          {
+            "id": 1599964,
+            "overNumber": 16,
+            "runrate": 5,
+            "runsConceded": 7,
+            "wickets": 0,
+            "totalInningRuns": 80,
+            "totalInningWickets": 7,
+            "totalRuns": 7
+          },
+          {
+            "id": 1599965,
+            "overNumber": 17,
+            "runrate": 5.06,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 86,
+            "totalInningWickets": 7,
+            "totalRuns": 6
+          },
+          {
+            "id": 1599966,
+            "overNumber": 18,
+            "runrate": 5.33,
+            "runsConceded": 10,
+            "wickets": 1,
+            "totalInningRuns": 96,
+            "totalInningWickets": 8,
+            "totalRuns": 10
+          },
+          {
+            "id": 1599967,
+            "overNumber": 19,
+            "runrate": 5.63,
+            "runsConceded": 11,
+            "wickets": 0,
+            "totalInningRuns": 107,
+            "totalInningWickets": 8,
+            "totalRuns": 11
+          },
+          {
+            "id": 1599969,
+            "overNumber": 20,
+            "runrate": 5.45,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 109,
+            "totalInningWickets": 8,
+            "totalRuns": 2
+          }
+        ],
+        "isDeclared": false,
+        "isFollowOn": false,
+        "isForfeited": false,
+        "overnightRuns": 0,
+        "overnightWickets": 0,
+        "byesRuns": 4,
+        "legByesRuns": 1,
+        "noBalls": 1,
+        "penalties": 0,
+        "totalExtras": 10,
+        "wideBalls": 4,
+        "oversBowled": "20.0",
+        "balls": 120,
+        "ballsRemaining": 0,
+        "runsScored": 109,
+        "currentRunRate": 5.44,
+        "numberOfWicketsFallen": 8,
+        "day": 1,
+        "duckworthLewisOvers": ""
+      },
+      {
+        "id": 75165,
+        "fixtureId": 40314,
+        "inningNumber": 2,
+        "battingTeamId": 23,
+        "bowlingTeamId": 637,
+        "overs": [
+          {
+            "id": 1599974,
+            "overNumber": 1,
+            "runrate": 17,
+            "runsConceded": 17,
+            "wickets": 0,
+            "totalInningRuns": 17,
+            "totalInningWickets": 0,
+            "totalRuns": 17
+          },
+          {
+            "id": 1599976,
+            "overNumber": 2,
+            "runrate": 9.5,
+            "runsConceded": 2,
+            "wickets": 0,
+            "totalInningRuns": 19,
+            "totalInningWickets": 0,
+            "totalRuns": 2
+          },
+          {
+            "id": 1599988,
+            "overNumber": 3,
+            "runrate": 9.33,
+            "runsConceded": 9,
+            "wickets": 0,
+            "totalInningRuns": 28,
+            "totalInningWickets": 0,
+            "totalRuns": 9
+          },
+          {
+            "id": 1600001,
+            "overNumber": 4,
+            "runrate": 8.5,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 34,
+            "totalInningWickets": 0,
+            "totalRuns": 6
+          },
+          {
+            "id": 1600012,
+            "overNumber": 5,
+            "runrate": 10.4,
+            "runsConceded": 18,
+            "wickets": 0,
+            "totalInningRuns": 52,
+            "totalInningWickets": 0,
+            "totalRuns": 18
+          },
+          {
+            "id": 1600026,
+            "overNumber": 6,
+            "runrate": 9,
+            "runsConceded": 2,
+            "wickets": 1,
+            "totalInningRuns": 54,
+            "totalInningWickets": 1,
+            "totalRuns": 2
+          },
+          {
+            "id": 1600041,
+            "overNumber": 7,
+            "runrate": 10.57,
+            "runsConceded": 20,
+            "wickets": 0,
+            "totalInningRuns": 74,
+            "totalInningWickets": 1,
+            "totalRuns": 20
+          },
+          {
+            "id": 1600055,
+            "overNumber": 8,
+            "runrate": 10.25,
+            "runsConceded": 8,
+            "wickets": 0,
+            "totalInningRuns": 82,
+            "totalInningWickets": 1,
+            "totalRuns": 8
+          },
+          {
+            "id": 1600069,
+            "overNumber": 9,
+            "runrate": 10.22,
+            "runsConceded": 10,
+            "wickets": 1,
+            "totalInningRuns": 92,
+            "totalInningWickets": 2,
+            "totalRuns": 10
+          },
+          {
+            "id": 1600088,
+            "overNumber": 10,
+            "runrate": 9.8,
+            "runsConceded": 6,
+            "wickets": 0,
+            "totalInningRuns": 98,
+            "totalInningWickets": 2,
+            "totalRuns": 6
+          },
+          {
+            "id": 1600105,
+            "overNumber": 11,
+            "runrate": 9,
+            "runsConceded": 1,
+            "wickets": 0,
+            "totalInningRuns": 99,
+            "totalInningWickets": 2,
+            "totalRuns": 1
+          },
+          {
+            "id": 1600104,
+            "overNumber": 11,
+            "runrate": 10.18,
+            "runsConceded": 14,
+            "wickets": 1,
+            "totalInningRuns": 112,
+            "totalInningWickets": 3,
+            "totalRuns": 14
+          }
+        ],
+        "isDeclared": false,
+        "isFollowOn": false,
+        "isForfeited": false,
+        "overnightRuns": 0,
+        "overnightWickets": 0,
+        "byesRuns": 0,
+        "legByesRuns": 1,
+        "noBalls": 0,
+        "penalties": 0,
+        "totalExtras": 2,
+        "wideBalls": 1,
+        "oversBowled": "11.0",
+        "balls": 66,
+        "ballsRemaining": 54,
+        "runsScored": 112,
+        "requiredRunRate": 0,
+        "currentRunRate": 10.18,
+        "numberOfWicketsFallen": 3,
+        "day": 1,
+        "duckworthLewisOvers": ""
+      }
+    ],
+    "id": 40314,
+    "name": "3rd T20I",
+    "startDateTime": "2026-06-21T08:00:00Z",
+    "endDateTime": "2026-06-21T12:30:00Z",
+    "gameTypeId": 3,
+    "isLive": false,
+    "isCompleted": true,
+    "isDuckworthLewis": false,
+    "numberOfDays": 1,
+    "resultText": "Australia win by 7 wickets",
+    "competitionId": 4628,
+    "venueId": 582,
+    "homeTeamId": 637,
+    "awayTeamId": 23,
+    "legacyFixtureId": 67504,
+    "isInProgress": false,
+    "totalOvers": "20",
+    "totalBalls": 6
+  },
+  "fixtureTitle": {
+    "fixtureName": "3rd T20I",
+    "score": "BAN v AUS 3-112"
+  }
+}

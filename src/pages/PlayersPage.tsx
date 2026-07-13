@@ -10,6 +10,8 @@ export const PlayersPage = () => {
   const navigate = useNavigate()
   const {
     players,
+    totalPlayers,
+    filteredPlayers,
     searchTerm,
     viewState,
     errorMessage,
@@ -32,15 +34,39 @@ export const PlayersPage = () => {
     <main className="app-shell">
       <header className="page-header players-header">
         <div>
-          <p className="eyebrow">Player Insights</p>
-          <h1>Explore cricket player profiles</h1>
+          <p className="eyebrow">CricDNA Player Directory</p>
+          <h1>Choose a player from the evidence set</h1>
           <p className="page-copy">
-            Search live CricAPI player data, then open a reusable insights
-            prototype powered by local mock analytics.
+            Search the local PlayCricket evidence set by player, country, or
+            role. Every player shown here has local match evidence; AI analysis
+            appears when the guardrail sample size is met.
           </p>
+          <div className="directory-stats" aria-label="Directory summary">
+            <span>
+              <strong>{totalPlayers}</strong>
+              Available players
+            </span>
+            <span>
+              <strong>{filteredPlayers}</strong>
+              Current results
+            </span>
+          </div>
         </div>
         <SearchInput value={searchTerm} onChange={setSearchTerm} />
       </header>
+
+      {viewState === ViewState.Loaded ? (
+        <section className="directory-toolbar" aria-label="Directory tools">
+          <div>
+            <p className="eyebrow">Available reports</p>
+            <h2>{filteredPlayers} players available</h2>
+          </div>
+          <p>
+            Try searches like <span>India</span>, <span>Bowler</span>,{' '}
+            <span>Wicket keeper</span>, or a player name.
+          </p>
+        </section>
+      ) : null}
 
       {isWaiting ? (
         <StatusMessage
@@ -67,7 +93,7 @@ export const PlayersPage = () => {
           message={
             searchTerm
               ? 'Try a different player name.'
-              : 'CricAPI returned an empty player list.'
+              : 'No supported CricDNA players were found in the local dataset.'
           }
         />
       ) : null}
