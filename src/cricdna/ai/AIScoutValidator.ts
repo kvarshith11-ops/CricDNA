@@ -1,4 +1,7 @@
 import type {
+  AIDNAObservation,
+  AIDNAObservationCategory,
+  AIDNAObservations,
   AIRating,
   AIRoleSuitability,
   AIScoutConfidence,
@@ -36,12 +39,32 @@ export const validateAIScoutResponse = (
     }
   }
 
+  requireAllowedKeys(
+    response,
+    'response',
+    [
+      'ratings',
+      'batting',
+      'bowling',
+      'fielding',
+      'overall',
+      'dnaScore',
+      'dnaObservations',
+      'strengths',
+      'developmentAreas',
+      'roleSuitability',
+      'scoutingReport',
+      'confidence',
+    ],
+    errors,
+  )
   requireRatingGroup(response.ratings, 'ratings', errors)
   requireText(response.batting, 'batting', errors)
   requireText(response.bowling, 'bowling', errors)
   requireText(response.fielding, 'fielding', errors)
   requireText(response.overall, 'overall', errors)
   requireRating(response.dnaScore, 'dnaScore', errors)
+  requireDnaObservations(response.dnaObservations, errors)
   requireStringArray(response.strengths, 'strengths', errors)
   requireStringArray(response.developmentAreas, 'developmentAreas', errors)
   requireRoleSuitabilityArray(response.roleSuitability, errors)
@@ -59,6 +82,93 @@ export const validateAIScoutResponse = (
     valid: true,
     errors: [],
     response: response as unknown as AIScoutResponse,
+  }
+}
+
+const observationCategories = ['batting', 'bowling', 'fielding', 'overall'] as const
+
+const requireDnaObservations = (
+  value: unknown,
+  errors: string[],
+): void => {
+  if (!isRecord(value)) {
+    errors.push("Missing or invalid 'dnaObservations'.")
+    return
+  }
+
+  requireAllowedKeys(value, 'dnaObservations', observationCategories, errors)
+
+  const observations = value as AIDNAObservations
+  let observationCount = 0
+
+  for (const category of observationCategories) {
+    const entries = observations[category]
+
+    if (entries === undefined) {
+      errors.push(`Missing or invalid 'dnaObservations.${category}'.`)
+      continue
+    }
+
+    if (!Array.isArray(entries)) {
+      errors.push(`'dnaObservations.${category}' must be an array.`)
+      continue
+    }
+
+    if (category === 'overall') {
+      continue
+    }
+
+    observationCount += entries.length
+    entries.forEach((entry, index) =>
+      requireDnaObservation(entry, category, `dnaObservations.${category}.${index}`, errors),
+    )
+  }
+
+  if (observationCount > 3) {
+    errors.push("'dnaObservations' must include no more than 3 visible observations.")
+  }
+}
+
+const requireDnaObservation = (
+  value: unknown,
+  groupCategory: AIDNAObservationCategory,
+  path: string,
+  errors: string[],
+): void => {
+  if (!isRecord(value)) {
+    errors.push(`'${path}' must be an object.`)
+    return
+  }
+
+  requireAllowedKeys(
+    value,
+    path,
+    ['title', 'category', 'summary', 'supportingTraits', 'supportingMetricIds', 'evidence'],
+    errors,
+  )
+
+  const observation = value as Partial<AIDNAObservation>
+
+  requireText(observation.title, `${path}.title`, errors)
+  requireText(observation.summary, `${path}.summary`, errors)
+  requireStringArray(observation.supportingTraits, `${path}.supportingTraits`, errors)
+  requireStringArray(
+    observation.supportingMetricIds,
+    `${path}.supportingMetricIds`,
+    errors,
+  )
+  requireStringArray(observation.evidence, `${path}.evidence`, errors)
+
+  if (!isObservationCategory(observation.category)) {
+    errors.push(`'${path}.category' must be a supported observation category.`)
+  } else if (observation.category !== groupCategory) {
+    errors.push(`'${path}.category' must match its '${groupCategory}' group.`)
+  }
+
+  const evidenceCount = observation.evidence?.length ?? 0
+
+  if (evidenceCount === 0) {
+    errors.push(`'${path}.evidence' must include at least one evidence item.`)
   }
 }
 
@@ -166,6 +276,21 @@ const requireStringArray = (
   })
 }
 
+const requireAllowedKeys = (
+  value: Record<string, unknown>,
+  path: string,
+  allowedKeys: readonly string[],
+  errors: string[],
+): void => {
+  const allowed = new Set(allowedKeys)
+
+  Object.keys(value).forEach((key) => {
+    if (!allowed.has(key)) {
+      errors.push(`Unsupported field '${path}.${key}'.`)
+    }
+  })
+}
+
 const requireText = (
   value: unknown,
   path: string,
@@ -178,6 +303,15 @@ const requireText = (
 
 const isValidScore = (value: unknown): value is number => {
   return typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= 100
+}
+
+const isObservationCategory = (
+  value: unknown,
+): value is AIDNAObservationCategory => {
+  return (
+    typeof value === 'string' &&
+    observationCategories.includes(value as AIDNAObservationCategory)
+  )
 }
 
 const isRecord = (value: unknown): value is Record<string, unknown> => {

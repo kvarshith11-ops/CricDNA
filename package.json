@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "preview": "vite preview",
-    "mobile:android": "npm run android:local --prefix mobile"
+    "mobile:android": "npm run android:local --prefix mobile",
+    "mobile:android:phone": "EXPO_PUBLIC_CRICDNA_API_BASE_URL=http://$(ipconfig getifaddr en0 || ipconfig getifaddr en1):5173 npm run android:local --prefix mobile"
   },
   "dependencies": {
     "axios": "^1.18.0",

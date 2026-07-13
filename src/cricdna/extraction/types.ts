@@ -64,6 +64,8 @@ export interface SourcePlayer {
   readonly displayName?: string
   readonly teamId?: number
   readonly type?: string
+  readonly nationality?: string
+  readonly dob?: string
   readonly battingHandId?: string
   readonly bowlingTypeId?: string
   readonly isCaptain?: boolean

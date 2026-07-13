@@ -32,13 +32,14 @@ const styles = StyleSheet.create({
   },
   score: {
     color: colors.ink,
+    fontFamily: 'Montserrat',
     fontSize: 40,
-    fontWeight: '900',
+    fontWeight: '700',
     lineHeight: 44,
   },
   maxScore: {
     color: colors.muted,
     fontSize: 14,
-    fontWeight: '800',
+    fontWeight: '400',
   },
 })

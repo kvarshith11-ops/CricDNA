@@ -65,7 +65,7 @@ Execution plan:
 Composite metrics are registered as normal `MetricDefinition` objects with:
 
 - `level = MetricLevel.Composite`
-- `dependencies = [primitive metric ids]`
+- `dependencies = [primitive or composite metric ids]`
 - a calculator implementing `MetricCalculator`
 
 Default registry loading registers:
@@ -73,14 +73,27 @@ Default registry loading registers:
 1. Primitive metric definitions
 2. Composite metric definitions
 
-Current placeholder composites:
+Current registered composites:
 
 - `bat.intent`
+- `bat.boundary_intent`
 - `bat.consistency`
+- `bat.scoring_consistency`
+- `bat.effectiveness`
+- `bat.conversion`
+- `bat.dismissal_resilience`
 - `bowl.control`
+- `bowl.wicket_threat`
+- `bowl.effectiveness`
+- `bowl.run_control`
+- `bowl.discipline`
+- `bowl.wicket_efficiency`
 - `field.impact`
-
-These placeholders validate architecture only. They do not implement cricket formulas.
+- `field.reliability`
+- `field.activity`
+- `field.catching_impact`
+- `field.run_out_impact`
+- `field.dismissal_involvement`
 
 ## Caching
 
@@ -97,7 +110,7 @@ Validation covers:
 - duplicate metric registrations
 - primitive metrics with dependencies
 - missing dependencies
-- composite dependencies on non-primitive metrics
+- composite dependencies on unsupported metric levels
 - circular dependency graphs
 - calculators returning a result for the wrong metric ID
 

@@ -1,3 +1,5 @@
 export * from './PlayerProfile'
 export * from './PlayerProfileBuilder'
+export * from './PlayerPhaseAnalysis'
+export * from './PlayerPresentation'
 export * from './PlayerProfileValidator'

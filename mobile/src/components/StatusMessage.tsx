@@ -38,12 +38,14 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.ink,
+    fontFamily: 'Montserrat',
     fontSize: 22,
-    fontWeight: '900',
+    fontWeight: '700',
   },
   message: {
     color: colors.muted,
     fontSize: 15,
+    fontWeight: '400',
   },
   button: {
     alignSelf: 'flex-start',

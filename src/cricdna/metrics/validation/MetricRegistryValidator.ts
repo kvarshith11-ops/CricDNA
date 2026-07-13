@@ -23,10 +23,11 @@ export const validateMetricRegistry = (registry: MetricRegistry): void => {
 
       if (
         definition.level === MetricLevel.Composite &&
-        dependency.level !== MetricLevel.Primitive
+        dependency.level !== MetricLevel.Primitive &&
+        dependency.level !== MetricLevel.Composite
       ) {
         throw new Error(
-          `Composite metric '${definition.id}' can depend only on primitive metric '${dependencyId}'.`,
+          `Composite metric '${definition.id}' can depend only on primitive or composite metric '${dependencyId}'.`,
         )
       }
     }

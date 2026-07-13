@@ -5,6 +5,8 @@ import { ViewState } from '../types/viewState'
 
 interface PlayersViewModel {
   players: Player[]
+  totalPlayers: number
+  filteredPlayers: number
   searchTerm: string
   viewState: ViewState
   errorMessage: string | null
@@ -82,9 +84,18 @@ export const usePlayersViewModel = (): PlayersViewModel => {
       return players
     }
 
-    return players.filter((player) =>
-      player.name.toLowerCase().includes(normalizedSearch),
-    )
+    return players.filter((player) => {
+      const searchableText = [
+        player.name,
+        player.country,
+        player.role,
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase()
+
+      return searchableText.includes(normalizedSearch)
+    })
   }, [players, searchTerm])
 
   const resolvedViewState = useMemo(() => {
@@ -97,6 +108,8 @@ export const usePlayersViewModel = (): PlayersViewModel => {
 
   return {
     players: filteredPlayers,
+    totalPlayers: players.length,
+    filteredPlayers: filteredPlayers.length,
     searchTerm,
     viewState: resolvedViewState,
     errorMessage,

@@ -2,6 +2,7 @@ import {
   DismissalKind,
   MatchFormat,
   MatchResultType,
+  PlayerRole,
   TossDecision,
   type OverBallRef,
   type PlayerId,
@@ -74,6 +75,23 @@ export const normalizeMatchFormat = (value?: string): MatchFormat => {
       return MatchFormat.Test
     default:
       return MatchFormat.Other
+  }
+}
+
+export const normalizePlayerRole = (value?: string): PlayerRole | undefined => {
+  switch (value?.trim().toLowerCase()) {
+    case 'batter':
+      return PlayerRole.Batter
+    case 'bowler':
+      return PlayerRole.Bowler
+    case 'allrounder':
+    case 'all-rounder':
+      return PlayerRole.AllRounder
+    case 'wicket keeper':
+    case 'wicketkeeper':
+      return PlayerRole.WicketKeeper
+    default:
+      return undefined
   }
 }
 

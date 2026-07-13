@@ -11,6 +11,9 @@ They consume only existing primitive `MetricResult`s from the Metric Engine resu
 - `bowl.control`
 - `bowl.wicket_threat`
 - `bowl.effectiveness`
+- `bowl.run_control`
+- `bowl.discipline`
+- `bowl.wicket_efficiency`
 
 ## Omitted Metrics
 
@@ -194,3 +197,112 @@ Limitations:
 - Requires successful `bowl.average` and `bowl.strike_rate`; zero-wicket careers return validation failure because those primitives return missing data.
 - Does not use phase, pressure, opposition, or venue context.
 - Does not infer control from unavailable dot-ball or boundary-conceded primitives.
+
+## bowl.run_control
+
+Definition: Measures ability to restrict runs using economy and maiden rate.
+
+Dependencies:
+
+- `bowl.economy`
+- `bowl.maidens`
+- `bowl.overs`
+
+Formula:
+
+```text
+economy_score = clamp(100 - bowl.economy / 10 * 100)
+maiden_rate = bowl.maidens / bowl.overs
+maiden_score = clamp(maiden_rate / 0.20 * 100)
+
+bowl.run_control =
+  economy_score * 0.70
+  + maiden_score * 0.30
+```
+
+Weightings:
+
+- Economy score: `70%`
+- Maiden rate score: `30%`
+
+Interpretation:
+
+- Higher values indicate stronger run restriction.
+- Lower values indicate expensive bowling or limited maiden-over pressure.
+
+Limitations:
+
+- Does not include dot-ball percentage because dot-ball primitive coverage is incomplete.
+- Does not include phase context or match situation.
+
+## bowl.discipline
+
+Definition: Measures extras control through wides and no-balls per over.
+
+Dependencies:
+
+- `bowl.wides`
+- `bowl.no_balls`
+- `bowl.overs`
+
+Formula:
+
+```text
+extras_per_over = (bowl.wides + bowl.no_balls) / bowl.overs
+
+bowl.discipline =
+  clamp(100 - extras_per_over / 1 * 100)
+```
+
+Weightings:
+
+- Extras discipline: `100%`
+
+Interpretation:
+
+- Higher values indicate fewer wides and no-balls per over.
+- Lower values indicate more frequent extras.
+
+Limitations:
+
+- Does not include leg-byes, byes, overstep severity, or match situation.
+
+## bowl.wicket_efficiency
+
+Definition: Measures wicket-taking efficiency through wicket cost, delivery cost, and wicket frequency.
+
+Dependencies:
+
+- `bowl.average`
+- `bowl.strike_rate`
+- `bowl.wickets`
+- `bowl.innings`
+
+Formula:
+
+```text
+average_score = clamp(100 - bowl.average / 50 * 100)
+strike_rate_score = clamp(100 - bowl.strike_rate / 60 * 100)
+wickets_per_innings_score = clamp((bowl.wickets / bowl.innings) / 2 * 100)
+
+bowl.wicket_efficiency =
+  average_score * 0.40
+  + strike_rate_score * 0.40
+  + wickets_per_innings_score * 0.20
+```
+
+Weightings:
+
+- Bowling average score: `40%`
+- Bowling strike-rate score: `40%`
+- Wickets per innings score: `20%`
+
+Interpretation:
+
+- Higher values indicate wickets taken at lower run and ball cost.
+- Lower values indicate expensive or slower wicket-taking.
+
+Limitations:
+
+- Requires successful `bowl.average` and `bowl.strike_rate`; zero-wicket careers return validation failure because those primitives return missing data.
+- Does not include chance creation, batter quality, phase, or pressure context.

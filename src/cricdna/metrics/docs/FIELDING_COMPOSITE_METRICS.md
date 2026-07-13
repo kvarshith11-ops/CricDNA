@@ -11,12 +11,17 @@ They consume only existing primitive `MetricResult`s from the Metric Engine resu
 - `field.impact`
 - `field.reliability`
 - `field.activity`
+- `field.catching_impact`
+- `field.run_out_impact`
+- `field.dismissal_involvement`
 
 ## Omitted Metrics
 
-No requested fielding composite metric was omitted.
+### true keeper catch-success / chance-based reliability
 
-Important limitation: the current primitive surface contains successful fielding outcomes only. It does not contain fielding chances, dropped catches, missed stumpings, missed run-out attempts, difficulty, fielding position, or opportunity denominators. Future reliability or impact models can become stronger when those primitives exist.
+Reason for omission: the current primitive surface contains successful fielding outcomes only. It does not contain fielding chances, dropped catches, missed stumpings, missed run-out attempts, difficulty, fielding position, or opportunity denominators.
+
+Future implementability: true chance-based reliability becomes implementable after deterministic chance and error primitives are added.
 
 ## Shared Validation
 
@@ -183,3 +188,100 @@ Limitations:
 - Does not include non-dismissal fielding actions such as saves, stops, throws, or pressure fielding.
 - Does not include opportunity or difficulty.
 - Does not infer involvement from commentary.
+
+## field.catching_impact
+
+Definition: Measures successful catch contribution per match.
+
+Dependencies:
+
+- `field.catches`
+- `field.matches`
+
+Formula:
+
+```text
+field.catching_impact =
+  clamp((field.catches / field.matches) / 1 * 100)
+```
+
+Weightings:
+
+- Catches per match: `100%`
+
+Interpretation:
+
+- Higher values indicate more frequent successful catching contribution.
+- Lower values indicate fewer recorded catches per match.
+
+Limitations:
+
+- Does not include catching chances, drops, fielding position, or catch difficulty.
+
+## field.run_out_impact
+
+Definition: Measures successful direct and assisted run-out contribution per match.
+
+Dependencies:
+
+- `field.run_outs`
+- `field.assisted_run_outs`
+- `field.matches`
+
+Formula:
+
+```text
+run_outs_per_match = (field.run_outs + field.assisted_run_outs) / field.matches
+
+field.run_out_impact =
+  clamp(run_outs_per_match / 0.5 * 100)
+```
+
+Weightings:
+
+- Run outs per match: `100%`
+
+Interpretation:
+
+- Higher values indicate more frequent run-out involvement.
+- Lower values indicate fewer recorded direct or assisted run outs.
+
+Limitations:
+
+- Does not include missed run-out chances or throw difficulty.
+
+## field.dismissal_involvement
+
+Definition: Measures total successful fielding dismissal involvement across matches and innings.
+
+Dependencies:
+
+- `field.dismissals`
+- `field.matches`
+- `field.innings`
+
+Formula:
+
+```text
+dismissals_per_match_score = clamp((field.dismissals / field.matches) / 2 * 100)
+dismissals_per_innings_score = clamp((field.dismissals / field.innings) / 1.5 * 100)
+
+field.dismissal_involvement =
+  dismissals_per_match_score * 0.60
+  + dismissals_per_innings_score * 0.40
+```
+
+Weightings:
+
+- Dismissals per match: `60%`
+- Dismissals per innings: `40%`
+
+Interpretation:
+
+- Higher values indicate more frequent successful involvement in dismissals.
+- Lower values indicate fewer recorded successful dismissal events.
+
+Limitations:
+
+- Does not measure true opportunity-based reliability.
+- Does not include missed chances, drops, difficulty, or fielding position.

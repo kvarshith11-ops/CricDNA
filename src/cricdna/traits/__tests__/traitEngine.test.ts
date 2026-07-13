@@ -60,7 +60,9 @@ describe('Trait Engine', () => {
   it('classifies high intent batters', () => {
     const result = runTraits([
       composite('bat.intent', MetricCategory.Batting, 84),
+      composite('bat.boundary_intent', MetricCategory.Batting, 76),
       composite('bat.consistency', MetricCategory.Batting, 62),
+      composite('bat.scoring_consistency', MetricCategory.Batting, 68),
       composite('bowl.control', MetricCategory.Bowling, 50),
       composite('bowl.wicket_threat', MetricCategory.Bowling, 50),
       composite('bowl.effectiveness', MetricCategory.Bowling, 50),
@@ -182,12 +184,24 @@ describe('Trait Engine', () => {
     const registry = loadDefaultTraitRegistry()
 
     expect(registry.has('trait.batting_style')).toBe(true)
+    expect(registry.has('trait.batting_boundary_style')).toBe(true)
     expect(registry.has('trait.bowling_style')).toBe(true)
+    expect(registry.has('trait.bowling_control')).toBe(true)
     expect(registry.has('trait.fielding_style')).toBe(true)
+    expect(registry.has('trait.fielding_activity')).toBe(true)
     expect(traitDefinitions.map((definition) => definition.id)).toEqual([
       'trait.batting_style',
+      'trait.batting_intent',
+      'trait.batting_boundary_style',
+      'trait.batting_scoring_consistency',
       'trait.bowling_style',
+      'trait.bowling_control',
+      'trait.bowling_wicket_threat',
+      'trait.bowling_effectiveness',
       'trait.fielding_style',
+      'trait.fielding_impact',
+      'trait.fielding_activity',
+      'trait.keeping_dismissal_involvement',
     ])
   })
 

@@ -1,4 +1,7 @@
-import type { AIScoutPrompt } from '../cricdna/ai'
+import {
+  AI_SCOUT_RESPONSE_SCHEMA,
+  type AIScoutPrompt,
+} from '../cricdna/ai'
 
 interface OpenAIResponseContent {
   readonly type?: string
@@ -55,7 +58,10 @@ export class OpenAIScoutService {
           ],
           text: {
             format: {
-              type: 'json_object',
+              type: 'json_schema',
+              name: 'cricdna_ai_scout_response',
+              strict: true,
+              schema: AI_SCOUT_RESPONSE_SCHEMA,
             },
           },
         }),

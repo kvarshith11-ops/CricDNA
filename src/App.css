@@ -38,6 +38,54 @@
   font-size: 1.05rem;
 }
 
+.directory-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.directory-stats span,
+.directory-toolbar {
+  border: 1px solid rgba(31, 122, 74, 0.16);
+  border-radius: 8px;
+  background: rgba(31, 122, 74, 0.06);
+}
+
+.directory-stats span {
+  display: grid;
+  min-width: 132px;
+  gap: 2px;
+  padding: 12px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.directory-stats strong {
+  color: var(--ink);
+  font-family: var(--heading-font);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.directory-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+}
+
+.directory-toolbar p:last-child {
+  max-width: 520px;
+  color: var(--muted);
+}
+
+.directory-toolbar span {
+  color: var(--green-dark);
+  font-weight: 700;
+}
+
 .search-field {
   display: grid;
   gap: 8px;
@@ -117,6 +165,7 @@
 .stat-card strong,
 .profile-item strong {
   display: block;
+  font-family: var(--heading-font);
 }
 
 .player-card small {
@@ -124,6 +173,16 @@
   margin-top: 4px;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.player-card em {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--green-dark);
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .status-card {
@@ -218,6 +277,48 @@
   align-items: center;
 }
 
+.dna-score-panel {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+
+.dna-score-panel .eyebrow {
+  margin: 0;
+}
+
+.dna-presentation-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.dna-presentation-labels span,
+.dna-presentation-labels strong {
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-family: var(--heading-font);
+  font-size: 0.92rem;
+  line-height: 1;
+}
+
+.dna-presentation-labels span {
+  color: var(--surface);
+  background: var(--green);
+}
+
+.dna-presentation-labels strong {
+  color: var(--green-dark);
+  background: rgba(31, 122, 74, 0.1);
+}
+
+.archetype-reason {
+  margin-top: 12px;
+  border-left: 3px solid var(--green);
+  padding-left: 12px;
+}
+
 .dna-hero-card p,
 .trend-card p,
 .summary-card p,
@@ -252,13 +353,15 @@
 }
 
 .score-circle strong {
+  font-family: var(--heading-font);
   font-size: 2.6rem;
   line-height: 1;
+  font-weight: 700;
 }
 
 .score-circle span {
   color: var(--muted);
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .dna-labels {
@@ -301,13 +404,103 @@
 .stat-card span {
   color: var(--muted);
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .stat-card strong {
   margin-top: 10px;
   font-size: clamp(1.4rem, 2vw, 2.2rem);
   line-height: 1.1;
+  font-weight: 700;
+}
+
+.phase-analysis {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.phase-analysis h3 {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-size: 1.25rem;
+  text-decoration: underline;
+}
+
+.phase-analysis > div > p,
+.phase-note {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.phase-group {
+  display: grid;
+  gap: 10px;
+}
+
+.phase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.phase-card {
+  display: grid;
+  gap: 10px;
+  border: 1px solid #d3dbe3;
+  border-radius: 8px;
+  padding: 18px;
+  text-align: center;
+  background: var(--surface);
+}
+
+.phase-card h4 {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-size: 1.1rem;
+  color: var(--blue);
+}
+
+.phase-card.phase-middle h4 {
+  color: var(--green);
+}
+
+.phase-card.phase-death h4 {
+  color: #e43f45;
+}
+
+.phase-card > strong {
+  font-family: var(--heading-font);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.phase-card > span {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.phase-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.phase-stat-grid span {
+  display: grid;
+  gap: 4px;
+  border-radius: 6px;
+  padding: 10px;
+  color: var(--muted);
+  font-weight: 400;
+  background: var(--surface-muted);
+}
+
+.phase-stat-grid b {
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .two-column {
@@ -361,6 +554,46 @@
   grid-column: 1 / -1;
 }
 
+.recent-performance-table {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.recent-performance-table table {
+  min-width: 560px;
+}
+
+.dna-observation-groups {
+  display: grid;
+  gap: 16px;
+}
+
+.dna-observation-group {
+  display: grid;
+  gap: 10px;
+}
+
+.dna-observation-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.dna-observation-card {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  background: var(--surface-muted);
+}
+
+.dna-observation-card p {
+  color: var(--muted);
+}
+
 .summary-card {
   display: grid;
   gap: 14px;
@@ -378,7 +611,7 @@
   position: relative;
   padding-left: 22px;
   color: var(--ink);
-  font-weight: 650;
+  font-weight: 400;
 }
 
 .highlight-list li::before {
@@ -430,7 +663,7 @@ th {
 }
 
 td {
-  font-weight: 650;
+  font-weight: 400;
 }
 
 tbody tr:last-child td {
@@ -446,13 +679,23 @@ tbody tr:last-child td {
   .page-header,
   .player-hero,
   .dna-hero-card,
+  .directory-toolbar,
   .two-column,
   .profile-grid {
     grid-template-columns: 1fr;
   }
 
+  .directory-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .phase-grid {
+    grid-template-columns: 1fr;
   }
 
   .breakdown-row {

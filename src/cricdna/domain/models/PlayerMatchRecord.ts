@@ -23,6 +23,8 @@ export interface PlayerMatchIdentity {
   readonly matchId: MatchId
   readonly team: TeamRef
   readonly opponent: TeamRef
+  readonly country?: string
+  readonly dateOfBirth?: string
   readonly role?: PlayerRole
   readonly battingHand?: BattingHand
   readonly bowlingStyle?: BowlingStyle

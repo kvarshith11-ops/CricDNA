@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchPlayerScoutProfile } from '../services/playerService'
-import type { AIScoutResponse } from '../types/aiScout'
+import type { CricDnaProfileResponse } from '../types/aiScout'
 import { ViewState } from '../types/viewState'
 
 interface PlayerInsightsViewModel {
-  profile: AIScoutResponse | null
+  report: CricDnaProfileResponse | null
   viewState: ViewState
   errorMessage: string | null
   retry: () => Promise<void>
@@ -14,7 +14,7 @@ interface PlayerInsightsViewModel {
 export const usePlayerInsightsViewModel = (): PlayerInsightsViewModel => {
   const { id } = useParams<{ id: string }>()
 
-  const [profile, setProfile] = useState<AIScoutResponse | null>(null)
+  const [report, setReport] = useState<CricDnaProfileResponse | null>(null)
   const [viewState, setViewState] = useState<ViewState>(ViewState.Idle)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
@@ -29,12 +29,12 @@ export const usePlayerInsightsViewModel = (): PlayerInsightsViewModel => {
     setErrorMessage(null)
 
     try {
-      const scoutProfile = await fetchPlayerScoutProfile(id)
+      const scoutReport = await fetchPlayerScoutProfile(id)
 
-      setProfile(scoutProfile)
+      setReport(scoutReport)
       setViewState(ViewState.Loaded)
     } catch (error) {
-      setProfile(null)
+      setReport(null)
       setViewState(ViewState.Error)
       setErrorMessage(
         error instanceof Error
@@ -53,7 +53,7 @@ export const usePlayerInsightsViewModel = (): PlayerInsightsViewModel => {
   }, [loadProfile])
 
   return {
-    profile,
+    report,
     viewState,
     errorMessage,
     retry: loadProfile,

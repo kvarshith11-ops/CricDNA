@@ -29,12 +29,13 @@ const styles = StyleSheet.create({
   label: {
     color: colors.muted,
     fontSize: 13,
-    fontWeight: '700',
+    fontWeight: '400',
   },
   value: {
     marginTop: spacing.sm,
     color: colors.ink,
+    fontFamily: 'Montserrat',
     fontSize: 20,
-    fontWeight: '900',
+    fontWeight: '700',
   },
 })

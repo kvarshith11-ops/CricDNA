@@ -14,6 +14,8 @@ type PlayersPageProps = NativeStackScreenProps<RootStackParamList, 'Players'>
 export const PlayersPage = ({ navigation }: PlayersPageProps) => {
   const {
     players,
+    totalPlayers,
+    filteredPlayers,
     searchTerm,
     viewState,
     errorMessage,
@@ -80,14 +82,33 @@ export const PlayersPage = ({ navigation }: PlayersPageProps) => {
       renderItem={() => (
         <>
           <View style={styles.header}>
-            <Text style={styles.eyebrow}>Player Insights</Text>
-            <Text style={styles.title}>Explore cricket player profiles</Text>
+            <Text style={styles.eyebrow}>CricDNA Player Directory</Text>
+            <Text style={styles.title}>Choose a player from the evidence set</Text>
             <Text style={styles.copy}>
-              Search player data, then open a reusable insights prototype powered
-              by local mock analytics.
+              Search the local PlayCricket evidence set by player, country, or
+              role. Every player shown has local match evidence; AI analysis
+              appears when the guardrail sample size is met.
             </Text>
+            <View style={styles.statsRow}>
+              <View style={styles.statPill}>
+                <Text style={styles.statValue}>{totalPlayers}</Text>
+                <Text style={styles.statLabel}>Available players</Text>
+              </View>
+              <View style={styles.statPill}>
+                <Text style={styles.statValue}>{filteredPlayers}</Text>
+                <Text style={styles.statLabel}>Current results</Text>
+              </View>
+            </View>
             <SearchInput value={searchTerm} onChange={setSearchTerm} />
           </View>
+          {viewState === ViewState.Loaded ? (
+            <View style={styles.toolbar}>
+              <Text style={styles.toolbarTitle}>{filteredPlayers} players available</Text>
+              <Text style={styles.toolbarCopy}>
+                Try India, Australia, Bowler, Wicket keeper, or a player name.
+              </Text>
+            </View>
+          ) : null}
           {renderContent()}
         </>
       )}
@@ -121,14 +142,61 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.ink,
+    fontFamily: 'Montserrat',
     fontSize: 34,
-    fontWeight: '900',
+    fontWeight: '700',
     lineHeight: 38,
   },
   copy: {
     color: colors.muted,
     fontSize: 15,
+    fontWeight: '400',
     lineHeight: 22,
+  },
+  statsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+  },
+  statPill: {
+    minWidth: 130,
+    gap: 2,
+    borderWidth: 1,
+    borderColor: '#C9DDCF',
+    borderRadius: 8,
+    padding: spacing.sm,
+    backgroundColor: '#E8F3EA',
+  },
+  statValue: {
+    color: colors.ink,
+    fontFamily: 'Montserrat',
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  statLabel: {
+    color: colors.muted,
+    fontSize: 12,
+    fontWeight: '400',
+  },
+  toolbar: {
+    gap: spacing.xs,
+    borderWidth: 1,
+    borderColor: '#C9DDCF',
+    borderRadius: 8,
+    padding: spacing.md,
+    backgroundColor: '#E8F3EA',
+  },
+  toolbarTitle: {
+    color: colors.ink,
+    fontFamily: 'Montserrat',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  toolbarCopy: {
+    color: colors.muted,
+    fontSize: 14,
+    fontWeight: '400',
+    lineHeight: 20,
   },
   separator: {
     height: spacing.md,

@@ -16,6 +16,7 @@ import {
   findPlayer,
   getOpponentTeam,
   getPlayerTeam,
+  normalizePlayerRole,
   toId,
 } from './helpers'
 import {
@@ -156,6 +157,9 @@ const createEmptyRecordProps = (
       opponent: opponent ?? {
         name: '',
       },
+      country: cleanOptionalText(player?.nationality) ?? countryFromTeamName(team?.name),
+      dateOfBirth: player?.dob,
+      role: normalizePlayerRole(player?.type),
     },
     context: {
       format: MatchFormat.Other,
@@ -186,4 +190,20 @@ const createEmptyRecordProps = (
     },
     metadata,
   }
+}
+
+const cleanOptionalText = (value: string | undefined): string | undefined => {
+  const cleaned = value?.trim()
+
+  return cleaned ? cleaned : undefined
+}
+
+const countryFromTeamName = (teamName: string | undefined): string | undefined => {
+  const cleaned = cleanOptionalText(teamName)
+
+  if (!cleaned || !/\s+(Men|Women)$/i.test(cleaned)) {
+    return undefined
+  }
+
+  return cleaned.replace(/\s+(Men|Women)$/i, '')
 }

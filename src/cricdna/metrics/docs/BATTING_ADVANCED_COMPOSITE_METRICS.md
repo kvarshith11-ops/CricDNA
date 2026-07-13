@@ -2,25 +2,164 @@
 
 ## Scope
 
-This document covers the planned advanced batting composite metrics:
+These metrics are deterministic composite metrics.
 
-- `bat.pressure`
-- `bat.finishing`
-- `bat.adaptability`
+They consume only registered `MetricResult`s produced by the Metric Engine. They do not read `PlayerKnowledgeModel`, `PlayerMatchRecord`, raw APIs, commentary, UI state, or generated text.
 
-Composite metrics must consume only registered `MetricResult`s produced by the Metric Engine. They must not read `PlayerKnowledgeModel`, `PlayerMatchRecord`, raw APIs, commentary, or generated text.
+## Implemented Metrics
 
-## Implementation Decision
+- `bat.effectiveness`
+- `bat.conversion`
+- `bat.dismissal_resilience`
 
-No advanced batting composite metrics were implemented in this pass.
+## Shared Validation
 
-Each planned metric requires context-specific performance inputs that are not currently available as registered primitive or composite `MetricResult`s. Implementing them now would require hidden heuristics, inferred context, or recalculation from PKM/PMRs, which is explicitly disallowed.
+All implemented metrics validate:
+
+- required dependency results exist in `context.results`
+- dependencies have the expected primitive or composite level
+- dependency status is `SUCCESS`
+- dependency values are finite numbers
+- dependency values are non-negative
+- denominator inputs are greater than zero where required
+- final score is finite and between `0` and `100`
+
+## bat.effectiveness
+
+Definition: Measures overall batting value from existing normalized batting composite signals.
+
+Dependencies:
+
+- `bat.intent`
+- `bat.consistency`
+- `bat.scoring_consistency`
+- `bat.boundary_intent`
+
+Formula:
+
+```text
+bat.effectiveness =
+  bat.consistency * 0.35
+  + bat.intent * 0.30
+  + bat.scoring_consistency * 0.20
+  + bat.boundary_intent * 0.15
+```
+
+Weightings:
+
+- Batting consistency: `35%`
+- Batting intent: `30%`
+- Scoring consistency: `20%`
+- Boundary intent: `15%`
+
+Interpretation:
+
+- Higher values indicate stronger combined scoring intent, consistency, and conversion into meaningful scores.
+- Lower values indicate weaker combined batting output across the currently supported batting composite surface.
+
+Limitations:
+
+- Does not include pressure, finishing, phase, venue, opponent, or chase context.
+- Does not recalculate primitive batting statistics.
+
+## bat.conversion
+
+Definition: Measures how often batting innings become meaningful scores.
+
+Dependencies:
+
+- `bat.innings`
+- `bat.fifties`
+- `bat.hundreds`
+- `bat.double_hundreds`
+
+Normalization constants:
+
+- Fifty-plus rate benchmark: `0.50`
+- Hundred-plus rate benchmark: `0.20`
+- Double-hundred rate benchmark: `0.05`
+
+Formula:
+
+```text
+fifty_plus_rate = (bat.fifties + bat.hundreds + bat.double_hundreds) / bat.innings
+hundred_plus_rate = (bat.hundreds + bat.double_hundreds) / bat.innings
+double_hundred_rate = bat.double_hundreds / bat.innings
+
+bat.conversion =
+  normalize(fifty_plus_rate, 0.50) * 0.60
+  + normalize(hundred_plus_rate, 0.20) * 0.35
+  + normalize(double_hundred_rate, 0.05) * 0.05
+```
+
+Weightings:
+
+- Fifty-plus rate: `60%`
+- Hundred-plus rate: `35%`
+- Double-hundred bonus: `5%`
+
+Interpretation:
+
+- Higher values indicate more frequent conversion of innings into substantial scores.
+- Lower values indicate fewer milestone scores relative to innings.
+
+Limitations:
+
+- Does not distinguish match situation or innings role.
+- Depends on career-level milestone counts only.
+
+## bat.dismissal_resilience
+
+Definition: Measures avoidance of low and dismissal-heavy batting outcomes using available dismissal primitives.
+
+Dependencies:
+
+- `bat.innings`
+- `bat.outs`
+- `bat.not_outs`
+- `bat.ducks`
+- `bat.average`
+
+Normalization constants:
+
+- Batting average benchmark: `50`
+- Duck rate benchmark: `0.20`
+- Not-out rate benchmark: `0.30`
+
+Formula:
+
+```text
+average_score = normalize(bat.average, 50)
+duck_rate = bat.ducks / bat.innings
+duck_avoidance_score = 100 - normalize(duck_rate, 0.20)
+not_out_rate = bat.not_outs / bat.innings
+not_out_resilience_score = normalize(not_out_rate, 0.30)
+
+bat.dismissal_resilience =
+  average_score * 0.40
+  + duck_avoidance_score * 0.35
+  + not_out_resilience_score * 0.25
+```
+
+Weightings:
+
+- Batting average: `40%`
+- Duck avoidance: `35%`
+- Not-out resilience: `25%`
+
+Interpretation:
+
+- Higher values indicate stronger output while avoiding ducks and preserving innings.
+- Lower values indicate weaker average, frequent ducks, or low not-out resilience.
+
+Limitations:
+
+- Not-out rate is a deterministic resilience proxy, not a finishing or pressure measure.
+- Does not infer dismissal quality, batter intent, or match context.
 
 ## Omitted Metrics
 
 ### bat.pressure
-
-Definition: Intended to measure deterministic batting performance in higher-value match contexts.
 
 Status: Omitted.
 
@@ -32,17 +171,9 @@ Missing dependencies:
 - wickets/overs match-state context metrics
 - batting performance split by pressure state
 
-Reason: Existing metrics expose global batting performance and broad context distributions, but they do not expose performance inside pressure states. Context metrics such as `context.home_matches` or `context.opponents` are match distributions, not pressure-performance inputs.
-
-Future implementation requirements:
-
-- deterministic `context.pressure_states` or equivalent
-- primitive batting metrics split by pressure state
-- registered primitive or composite results for those split metrics
+Reason: Existing metrics expose global batting performance and broad context distributions, but they do not expose performance inside pressure states.
 
 ### bat.finishing
-
-Definition: Intended to measure deterministic batting effectiveness in finishing situations.
 
 Status: Omitted.
 
@@ -54,17 +185,9 @@ Missing dependencies:
 - finishing-situation marker
 - batting performance split by finishing situation
 
-Reason: The current primitive layer has no phase, death-over, target, chase, or finishing-situation metrics. Using global strike rate, average, or intent would not specifically measure finishing.
-
-Future implementation requirements:
-
-- deterministic phase or innings-situation primitives
-- death-over or finishing-window batting primitives
-- target/chase context primitives if finishing is defined by chase state
+Reason: The current primitive layer has no phase, death-over, target, chase, or finishing-situation metrics.
 
 ### bat.adaptability
-
-Definition: Intended to measure whether batting performance is maintained across formats, opponents, and contexts.
 
 Status: Omitted.
 
@@ -75,19 +198,8 @@ Missing dependencies:
 - batting performance split by home/away/neutral context
 - per-context consistency or intent metrics
 
-Reason: Existing context metrics provide distributions such as `context.formats` and `context.opponents`, while batting composites provide global values such as `bat.intent` and `bat.consistency`. There is no registered metric that connects batting performance to each context bucket.
-
-Future implementation requirements:
-
-- format-specific batting primitive/composite results
-- opponent-specific batting primitive/composite results
-- home/away/neutral batting primitive/composite results
-- deterministic aggregation rules for comparing those context-specific results
-
-## Validation Principle
-
-These metrics remain unregistered until their required dependencies exist. This prevents consumers from receiving scores that imply unsupported pressure, finishing, or adaptability analysis.
+Reason: Existing context metrics provide match distributions, but no registered metrics connect batting performance to each context bucket.
 
 ## Design Principle
 
-The batting composite layer must not fill missing context with assumptions. A metric is preferable to omit rather than implement with hidden heuristics.
+The batting composite layer must not fill missing context with assumptions. Unsupported concepts remain unregistered until their deterministic dependencies exist.

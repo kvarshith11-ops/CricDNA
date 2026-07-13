@@ -106,6 +106,69 @@ export class BattingStyleTraitCalculator extends CompositeTraitCalculator {
   }
 }
 
+export class BattingIntentTraitCalculator extends CompositeTraitCalculator {
+  constructor() {
+    super({
+      traitId: 'trait.batting_intent',
+      traitName: 'Batting Intent Trait',
+      category: TraitCategory.Batting,
+      dependencies: ['bat.intent'],
+      classify: (inputs) => {
+        const intent = requiredInput(inputs, 'bat.intent')
+
+        return {
+          label: intent >= HIGH_THRESHOLD ? 'High Intent Batter' : 'Measured Intent Batter',
+          explanation: `Classified from bat.intent ${intent}.`,
+        }
+      },
+    })
+  }
+}
+
+export class BattingBoundaryTraitCalculator extends CompositeTraitCalculator {
+  constructor() {
+    super({
+      traitId: 'trait.batting_boundary_style',
+      traitName: 'Batting Boundary Style',
+      category: TraitCategory.Batting,
+      dependencies: ['bat.boundary_intent'],
+      classify: (inputs) => {
+        const boundaryIntent = requiredInput(inputs, 'bat.boundary_intent')
+
+        return {
+          label:
+            boundaryIntent >= HIGH_THRESHOLD
+              ? 'Boundary-Focused Scorer'
+              : 'Low-Boundary Scorer',
+          explanation: `Classified from bat.boundary_intent ${boundaryIntent}.`,
+        }
+      },
+    })
+  }
+}
+
+export class BattingScoringConsistencyTraitCalculator extends CompositeTraitCalculator {
+  constructor() {
+    super({
+      traitId: 'trait.batting_scoring_consistency',
+      traitName: 'Batting Scoring Consistency Trait',
+      category: TraitCategory.Batting,
+      dependencies: ['bat.scoring_consistency'],
+      classify: (inputs) => {
+        const scoringConsistency = requiredInput(inputs, 'bat.scoring_consistency')
+
+        return {
+          label:
+            scoringConsistency >= HIGH_THRESHOLD
+              ? 'Consistent Scoring Contributor'
+              : 'Variable Scoring Contributor',
+          explanation: `Classified from bat.scoring_consistency ${scoringConsistency}.`,
+        }
+      },
+    })
+  }
+}
+
 export class BowlingStyleTraitCalculator extends CompositeTraitCalculator {
   constructor() {
     super({
@@ -141,6 +204,66 @@ export class BowlingStyleTraitCalculator extends CompositeTraitCalculator {
   }
 }
 
+export class BowlingControlTraitCalculator extends CompositeTraitCalculator {
+  constructor() {
+    super({
+      traitId: 'trait.bowling_control',
+      traitName: 'Bowling Control Trait',
+      category: TraitCategory.Bowling,
+      dependencies: ['bowl.control'],
+      classify: (inputs) => {
+        const control = requiredInput(inputs, 'bowl.control')
+
+        return {
+          label: control >= HIGH_THRESHOLD ? 'Control Bowler' : 'Developing Control Bowler',
+          explanation: `Classified from bowl.control ${control}.`,
+        }
+      },
+    })
+  }
+}
+
+export class BowlingThreatTraitCalculator extends CompositeTraitCalculator {
+  constructor() {
+    super({
+      traitId: 'trait.bowling_wicket_threat',
+      traitName: 'Bowling Wicket Threat Trait',
+      category: TraitCategory.Bowling,
+      dependencies: ['bowl.wicket_threat'],
+      classify: (inputs) => {
+        const wicketThreat = requiredInput(inputs, 'bowl.wicket_threat')
+
+        return {
+          label: wicketThreat >= HIGH_THRESHOLD ? 'Wicket Threat' : 'Low Wicket Threat',
+          explanation: `Classified from bowl.wicket_threat ${wicketThreat}.`,
+        }
+      },
+    })
+  }
+}
+
+export class BowlingEffectivenessTraitCalculator extends CompositeTraitCalculator {
+  constructor() {
+    super({
+      traitId: 'trait.bowling_effectiveness',
+      traitName: 'Bowling Effectiveness Trait',
+      category: TraitCategory.Bowling,
+      dependencies: ['bowl.effectiveness'],
+      classify: (inputs) => {
+        const effectiveness = requiredInput(inputs, 'bowl.effectiveness')
+
+        return {
+          label:
+            effectiveness >= HIGH_THRESHOLD
+              ? 'Effective Bowling Contributor'
+              : 'Situational Bowling Contributor',
+          explanation: `Classified from bowl.effectiveness ${effectiveness}.`,
+        }
+      },
+    })
+  }
+}
+
 export class FieldingStyleTraitCalculator extends CompositeTraitCalculator {
   constructor() {
     super({
@@ -170,6 +293,66 @@ export class FieldingStyleTraitCalculator extends CompositeTraitCalculator {
         return {
           label: 'Reliable Defender',
           explanation: `Classified from field.impact ${impact}, field.reliability ${reliability}, and field.activity ${activity}: fielding signals did not produce a dominant high-activity or high-reliability classification.`,
+        }
+      },
+    })
+  }
+}
+
+export class FieldingImpactTraitCalculator extends CompositeTraitCalculator {
+  constructor() {
+    super({
+      traitId: 'trait.fielding_impact',
+      traitName: 'Fielding Impact Trait',
+      category: TraitCategory.Fielding,
+      dependencies: ['field.impact'],
+      classify: (inputs) => {
+        const impact = requiredInput(inputs, 'field.impact')
+
+        return {
+          label: impact >= HIGH_THRESHOLD ? 'Impact Fielder' : 'Support Fielder',
+          explanation: `Classified from field.impact ${impact}.`,
+        }
+      },
+    })
+  }
+}
+
+export class FieldingActivityTraitCalculator extends CompositeTraitCalculator {
+  constructor() {
+    super({
+      traitId: 'trait.fielding_activity',
+      traitName: 'Fielding Activity Trait',
+      category: TraitCategory.Fielding,
+      dependencies: ['field.activity'],
+      classify: (inputs) => {
+        const activity = requiredInput(inputs, 'field.activity')
+
+        return {
+          label: activity >= HIGH_THRESHOLD ? 'Active Fielder' : 'Low Activity Fielder',
+          explanation: `Classified from field.activity ${activity}.`,
+        }
+      },
+    })
+  }
+}
+
+export class WicketKeepingDismissalTraitCalculator extends CompositeTraitCalculator {
+  constructor() {
+    super({
+      traitId: 'trait.keeping_dismissal_involvement',
+      traitName: 'Keeping Dismissal Involvement',
+      category: TraitCategory.Fielding,
+      dependencies: ['field.reliability'],
+      classify: (inputs) => {
+        const reliability = requiredInput(inputs, 'field.reliability')
+
+        return {
+          label:
+            reliability >= HIGH_THRESHOLD
+              ? 'High Dismissal Involvement Keeper'
+              : 'Developing Dismissal Involvement Keeper',
+          explanation: `Classified from field.reliability ${reliability}.`,
         }
       },
     })

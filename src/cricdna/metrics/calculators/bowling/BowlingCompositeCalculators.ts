@@ -209,6 +209,92 @@ export class BowlEffectivenessCalculator extends BowlingCompositeCalculator {
   }
 }
 
+export class BowlRunControlCalculator extends BowlingCompositeCalculator {
+  constructor() {
+    super({
+      metricId: 'bowl.run_control',
+      name: 'Bowling Run Control',
+      dependencies: ['bowl.economy', 'bowl.maidens', 'bowl.overs'],
+      calculateScore: (inputs) => {
+        const overs = requiredPositiveInput(inputs, 'bowl.overs')
+        const economyScore = inverseNormalize(
+          requiredInput(inputs, 'bowl.economy'),
+          ECONOMY_UPPER_BENCHMARK,
+        )
+        const maidenRate = requiredInput(inputs, 'bowl.maidens') / overs
+        const maidenScore = normalize(maidenRate, MAIDEN_RATE_BENCHMARK)
+
+        return roundScore(economyScore * 0.7 + maidenScore * 0.3)
+      },
+      metadata: {
+        economyWeight: 0.7,
+        maidenRateWeight: 0.3,
+        economyUpperBenchmark: ECONOMY_UPPER_BENCHMARK,
+        maidenRateBenchmark: MAIDEN_RATE_BENCHMARK,
+      },
+    })
+  }
+}
+
+export class BowlDisciplineCalculator extends BowlingCompositeCalculator {
+  constructor() {
+    super({
+      metricId: 'bowl.discipline',
+      name: 'Bowling Discipline',
+      dependencies: ['bowl.wides', 'bowl.no_balls', 'bowl.overs'],
+      calculateScore: (inputs) => {
+        const overs = requiredPositiveInput(inputs, 'bowl.overs')
+        const extrasPerOver =
+          (requiredInput(inputs, 'bowl.wides') + requiredInput(inputs, 'bowl.no_balls')) /
+          overs
+
+        return roundScore(inverseNormalize(extrasPerOver, EXTRAS_PER_OVER_BENCHMARK))
+      },
+      metadata: {
+        extrasPerOverWeight: 1,
+        extrasPerOverBenchmark: EXTRAS_PER_OVER_BENCHMARK,
+      },
+    })
+  }
+}
+
+export class BowlWicketEfficiencyCalculator extends BowlingCompositeCalculator {
+  constructor() {
+    super({
+      metricId: 'bowl.wicket_efficiency',
+      name: 'Bowling Wicket Efficiency',
+      dependencies: ['bowl.average', 'bowl.strike_rate', 'bowl.wickets', 'bowl.innings'],
+      calculateScore: (inputs) => {
+        const averageScore = inverseNormalize(
+          requiredInput(inputs, 'bowl.average'),
+          AVERAGE_UPPER_BENCHMARK,
+        )
+        const strikeRateScore = inverseNormalize(
+          requiredInput(inputs, 'bowl.strike_rate'),
+          STRIKE_RATE_UPPER_BENCHMARK,
+        )
+        const wicketsPerInningsScore = normalize(
+          requiredInput(inputs, 'bowl.wickets') /
+            requiredPositiveInput(inputs, 'bowl.innings'),
+          WICKETS_PER_INNINGS_BENCHMARK,
+        )
+
+        return roundScore(
+          averageScore * 0.4 + strikeRateScore * 0.4 + wicketsPerInningsScore * 0.2,
+        )
+      },
+      metadata: {
+        averageWeight: 0.4,
+        strikeRateWeight: 0.4,
+        wicketsPerInningsWeight: 0.2,
+        averageUpperBenchmark: AVERAGE_UPPER_BENCHMARK,
+        strikeRateUpperBenchmark: STRIKE_RATE_UPPER_BENCHMARK,
+        wicketsPerInningsBenchmark: WICKETS_PER_INNINGS_BENCHMARK,
+      },
+    })
+  }
+}
+
 type InputResult =
   | {
       readonly ok: true

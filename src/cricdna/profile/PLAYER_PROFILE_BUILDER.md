@@ -102,4 +102,4 @@ The schema is identical for every role. Missing or not-applicable values remain 
 - No AI or LLM calls.
 - No narratives, recommendations, scouting reports, ratings, strengths, or weaknesses.
 - No statistic recalculation from PKM when a primitive metric already owns the value.
-- `bestBowling` remains `null` until a deterministic primitive metric exists for it.
+- `bestBowling` is derived deterministically from available bowling spells by ranking wickets first, then lower runs conceded.

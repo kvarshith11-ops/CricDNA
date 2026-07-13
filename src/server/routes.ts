@@ -1,11 +1,32 @@
 import type { ServerResponse } from 'node:http'
 import type { Connect, Plugin } from 'vite'
+import { PlayerDirectoryController } from './PlayerDirectoryController'
 import { PlayerProfileController } from './PlayerProfileController'
 
 export const cricDnaApiRoutes = (): Plugin => ({
   name: 'cricdna-local-api',
   configureServer(server) {
     server.middlewares.use(async (request, response, next) => {
+      if (request.url?.match(/^\/api\/players(?:\?.*)?$/)) {
+        if (request.method !== 'GET') {
+          sendJson(response, 405, { error: 'Method not allowed.' })
+          return
+        }
+
+        try {
+          sendJson(response, 200, new PlayerDirectoryController().listPlayers())
+        } catch (error) {
+          sendJson(response, 500, {
+            error:
+              error instanceof Error
+                ? error.message
+                : 'Unexpected player directory failure.',
+          })
+        }
+
+        return
+      }
+
       if (!request.url || !request.url.startsWith('/api/player/')) {
         next()
         return

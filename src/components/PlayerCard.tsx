@@ -6,6 +6,8 @@ interface PlayerCardProps {
 }
 
 export const PlayerCard = ({ player, onSelect }: PlayerCardProps) => {
+  const meta = [player.country, player.role].filter(Boolean).join(' • ')
+
   return (
     <button
       type="button"
@@ -18,7 +20,10 @@ export const PlayerCard = ({ player, onSelect }: PlayerCardProps) => {
       </span>
       <span>
         <strong>{player.name}</strong>
-        <small>{player.country || 'Country unavailable'}</small>
+        {meta ? <small>{meta}</small> : null}
+        {player.matchCount ? (
+          <em>{player.matchCount} match evidence</em>
+        ) : null}
       </span>
     </button>
   )

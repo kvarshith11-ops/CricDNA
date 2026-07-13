@@ -52,6 +52,7 @@ const profile: PlayerProfile = {
     playerName: 'Player One',
     country: 'India',
     role: 'batter',
+    age: 28,
     primaryTeam: { id: 'team-a', name: 'Team A' },
   },
   headlineStats: {
@@ -59,6 +60,7 @@ const profile: PlayerProfile = {
     runs: 250,
     wickets: 0,
     catches: 3,
+    keeperDismissals: 3,
     battingAverage: 50,
     strikeRate: 130,
     economy: null,
@@ -75,9 +77,36 @@ const profile: PlayerProfile = {
       result: MatchResultType.Won,
       runs: 91,
       wickets: null,
+      bowlingRunsConceded: null,
       catches: 1,
+      stumpings: 0,
+      dismissals: 1,
+      economy: null,
+      playerOfMatch: true,
     },
   ],
+  trend: {
+    label: 'Improving',
+    direction: 'up',
+    reason: 'Improving because runs improved from 40 to 91 across the latest 3 matches.',
+    recentMatchCount: 3,
+  },
+  phaseAnalysis: {
+    batting: [],
+    bowling: [],
+    coverage: {
+      source: 'comments',
+      matchesWithComments: 0,
+      hasIncompleteCommentary: false,
+    },
+  },
+  guardrails: {
+    eligible: true,
+    sampleSize: 5,
+    minimumRequiredMatches: 3,
+    reasons: [],
+    warnings: [],
+  },
   primitiveMetrics: {
     'bat.runs': metric('bat.runs', MetricLevel.Primitive, MetricCategory.Batting, 250),
   },
@@ -122,7 +151,27 @@ const validResponse: AIScoutResponse = {
   overall: 'Profile indicates a batting-led player based only on supplied data.',
   dnaScore: {
     score: 80,
-    explanation: 'DNA score reflects supplied deterministic profile evidence.',
+    explanation:
+      'The DNA score is driven by strong supplied batting evidence: 250 runs in five matches, a 50.00 average, 130 strike rate, a best score of 91, and an improving recent trend. Limited bowling evidence keeps the score from moving higher.',
+  },
+  dnaObservations: {
+    batting: [
+      {
+        title: 'Intent-led batting profile',
+        category: 'batting',
+        summary:
+          'The deterministic batting traits point to a player who scores with clear attacking intent.',
+        supportingTraits: ['trait.batting_style'],
+        supportingMetricIds: ['bat.intent'],
+        evidence: [
+          'trait.batting_style classified the player as an Aggressive Stroke Player.',
+          'bat.intent was supplied as a successful composite metric.',
+        ],
+      },
+    ],
+    bowling: [],
+    fielding: [],
+    overall: [],
   },
   strengths: ['Uses supplied batting intent evidence well.'],
   developmentAreas: ['Needs more supplied bowling evidence before evaluation.'],
@@ -150,6 +199,15 @@ describe('AI Scout integration layer', () => {
     expect(prompt.user).toContain('"playerProfile"')
     expect(prompt.user).toContain('"expectedResponseSchema"')
     expect(prompt.user).toContain('"playerId": "p1"')
+    expect(prompt.user).toContain('dnaScore.explanation must be a concise')
+    expect(prompt.user).toContain('Deterministic traits inside playerProfile.traits')
+    expect(prompt.user).toContain('Return 1 to 3 total dnaObservations')
+    expect(prompt.user).toContain('Never put observations in dnaObservations.overall')
+    expect(prompt.user).toContain('dnaObservations are display-only scout interpretations')
+    expect(prompt.user).toContain('use an empty array for unsupported role groups')
+    expect(prompt.user).toContain('Do not mention recent trend')
+    expect(prompt.user).toContain('Do not include internal metric ids')
+    expect(prompt.user).toContain('plain cricket language for end users')
   })
 
   it('validates a valid AI response', () => {
@@ -243,6 +301,141 @@ describe('AI Scout integration layer', () => {
     expect(validation.errors).toContain("'strengths.1' must be a non-empty string.")
     expect(validation.errors).toContain(
       "'confidence.score' must be a number between 0 and 100.",
+    )
+  })
+
+  it('rejects missing DNA observations', () => {
+    const validation = validateAIScoutResponse({
+      ...validResponse,
+      dnaObservations: undefined,
+    })
+
+    expect(validation.valid).toBe(false)
+    expect(validation.errors).toContain("Missing or invalid 'dnaObservations'.")
+  })
+
+  it('rejects unsupported DNA observation fields', () => {
+    const validation = validateAIScoutResponse({
+      ...validResponse,
+      dnaObservations: {
+        batting: [
+          {
+            ...validResponse.dnaObservations.batting?.[0],
+            unsupported: 'not allowed',
+          },
+        ],
+        bowling: [],
+        fielding: [],
+        overall: [],
+      },
+    })
+
+    expect(validation.valid).toBe(false)
+    expect(validation.errors).toContain(
+      "Unsupported field 'dnaObservations.batting.0.unsupported'.",
+    )
+  })
+
+  it('rejects DNA observations without evidence text', () => {
+    const validation = validateAIScoutResponse({
+      ...validResponse,
+      dnaObservations: {
+        batting: [
+          {
+            title: 'Unsupported observation',
+            category: 'batting',
+            summary: 'This observation has no deterministic support.',
+            supportingTraits: [],
+            supportingMetricIds: [],
+            evidence: [],
+          },
+        ],
+        bowling: [],
+        fielding: [],
+        overall: [],
+      },
+    })
+
+    expect(validation.valid).toBe(false)
+    expect(validation.errors).toContain(
+      "'dnaObservations.batting.0.evidence' must include at least one evidence item.",
+    )
+  })
+
+  it('rejects more than three total DNA observations', () => {
+    const observation = validResponse.dnaObservations.batting[0]
+
+    const validation = validateAIScoutResponse({
+      ...validResponse,
+      dnaObservations: {
+        batting: [observation, observation, observation, observation],
+        bowling: [],
+        fielding: [],
+        overall: [],
+      },
+    })
+
+    expect(validation.valid).toBe(false)
+    expect(validation.errors).toContain(
+      "'dnaObservations' must include no more than 3 visible observations.",
+    )
+  })
+
+  it('accepts extra overall observations because the UI ignores them', () => {
+    const observation = validResponse.dnaObservations.batting[0]
+
+    const validation = validateAIScoutResponse({
+      ...validResponse,
+      dnaObservations: {
+        batting: [],
+        bowling: [],
+        fielding: [],
+        overall: [{ ...observation, category: 'overall' }],
+      },
+    })
+
+    expect(validation.valid).toBe(true)
+    expect(validation.errors).toEqual([])
+  })
+
+  it('accepts DNA observations with evidence even when supporting id arrays are empty', () => {
+    const validation = validateAIScoutResponse({
+      ...validResponse,
+      dnaObservations: {
+        batting: [
+          {
+            title: 'Evidence-backed observation',
+            category: 'batting',
+            summary: 'The observation is backed by textual deterministic evidence.',
+            supportingTraits: [],
+            supportingMetricIds: [],
+            evidence: ['The supplied profile includes batting evidence.'],
+          },
+        ],
+        bowling: [],
+        fielding: [],
+        overall: [],
+      },
+    })
+
+    expect(validation.valid).toBe(true)
+    expect(validation.errors).toEqual([])
+  })
+
+  it('rejects missing DNA observation category arrays', () => {
+    const validation = validateAIScoutResponse({
+      ...validResponse,
+      dnaObservations: {
+        batting: validResponse.dnaObservations.batting,
+      },
+    })
+
+    expect(validation.valid).toBe(false)
+    expect(validation.errors).toContain(
+      "Missing or invalid 'dnaObservations.bowling'.",
+    )
+    expect(validation.errors).toContain(
+      "Missing or invalid 'dnaObservations.fielding'.",
     )
   })
 })

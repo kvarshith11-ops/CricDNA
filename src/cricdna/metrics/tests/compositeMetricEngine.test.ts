@@ -229,15 +229,33 @@ describe('Composite Metric Engine', () => {
     )
   })
 
-  it('rejects composite dependencies on non-primitive metrics', () => {
+  it('supports composite dependencies on other composite metrics', () => {
     const registry = MetricRegistry.fromDefinitions([
       primitiveDefinition('bat.strike_rate'),
       compositeDefinition('bat.intent', ['bat.strike_rate']),
       compositeDefinition('bat.super_intent', ['bat.intent']),
     ])
 
+    expect(() => validateMetricRegistry(registry)).not.toThrow()
+    expect(resolveExecutionPlan(registry, ['bat.super_intent']).orderedMetricIds).toEqual([
+      'bat.strike_rate',
+      'bat.intent',
+      'bat.super_intent',
+    ])
+  })
+
+  it('rejects composite dependencies on trait-level metrics', () => {
+    const traitDefinition: MetricDefinition = {
+      ...compositeDefinition('trait.batting_style', []),
+      level: MetricLevel.Trait,
+    }
+    const registry = MetricRegistry.fromDefinitions([
+      traitDefinition,
+      compositeDefinition('bat.super_intent', ['trait.batting_style']),
+    ])
+
     expect(() => validateMetricRegistry(registry)).toThrow(
-      "Composite metric 'bat.super_intent' can depend only on primitive metric 'bat.intent'.",
+      "Composite metric 'bat.super_intent' can depend only on primitive or composite metric 'trait.batting_style'.",
     )
   })
 

@@ -1,4 +1,9 @@
 import {
+  BatConversionCalculator,
+  BatDismissalResilienceCalculator,
+  BatEffectivenessCalculator,
+} from '../calculators/batting/BattingExpandedCompositeCalculators'
+import {
   BatConsistencyCalculator,
   BatScoringConsistencyCalculator,
 } from '../calculators/batting/BattingConsistencyCompositeCalculators'
@@ -8,13 +13,19 @@ import {
 } from '../calculators/batting/BattingIntentCompositeCalculators'
 import {
   BowlControlCalculator,
+  BowlDisciplineCalculator,
   BowlEffectivenessCalculator,
+  BowlRunControlCalculator,
+  BowlWicketEfficiencyCalculator,
   BowlWicketThreatCalculator,
 } from '../calculators/bowling/BowlingCompositeCalculators'
 import {
   FieldActivityCalculator,
+  FieldCatchingImpactCalculator,
+  FieldDismissalInvolvementCalculator,
   FieldImpactCalculator,
   FieldReliabilityCalculator,
+  FieldRunOutImpactCalculator,
 } from '../calculators/fielding/FieldingCompositeCalculators'
 import {
   MetricCategory,
@@ -68,6 +79,38 @@ export const compositeMetricDefinitions: readonly MetricDefinition[] = [
     calculator: new BatScoringConsistencyCalculator(),
   },
   {
+    id: 'bat.effectiveness',
+    name: 'Batting Effectiveness',
+    category: MetricCategory.Batting,
+    level: MetricLevel.Composite,
+    dependencies: [
+      'bat.intent',
+      'bat.consistency',
+      'bat.scoring_consistency',
+      'bat.boundary_intent',
+    ],
+    version,
+    calculator: new BatEffectivenessCalculator(),
+  },
+  {
+    id: 'bat.conversion',
+    name: 'Batting Conversion',
+    category: MetricCategory.Batting,
+    level: MetricLevel.Composite,
+    dependencies: ['bat.innings', 'bat.fifties', 'bat.hundreds', 'bat.double_hundreds'],
+    version,
+    calculator: new BatConversionCalculator(),
+  },
+  {
+    id: 'bat.dismissal_resilience',
+    name: 'Dismissal Resilience',
+    category: MetricCategory.Batting,
+    level: MetricLevel.Composite,
+    dependencies: ['bat.innings', 'bat.outs', 'bat.not_outs', 'bat.ducks', 'bat.average'],
+    version,
+    calculator: new BatDismissalResilienceCalculator(),
+  },
+  {
     id: 'bowl.control',
     name: 'Bowling Control',
     category: MetricCategory.Bowling,
@@ -105,6 +148,33 @@ export const compositeMetricDefinitions: readonly MetricDefinition[] = [
     ],
     version,
     calculator: new BowlEffectivenessCalculator(),
+  },
+  {
+    id: 'bowl.run_control',
+    name: 'Bowling Run Control',
+    category: MetricCategory.Bowling,
+    level: MetricLevel.Composite,
+    dependencies: ['bowl.economy', 'bowl.maidens', 'bowl.overs'],
+    version,
+    calculator: new BowlRunControlCalculator(),
+  },
+  {
+    id: 'bowl.discipline',
+    name: 'Bowling Discipline',
+    category: MetricCategory.Bowling,
+    level: MetricLevel.Composite,
+    dependencies: ['bowl.wides', 'bowl.no_balls', 'bowl.overs'],
+    version,
+    calculator: new BowlDisciplineCalculator(),
+  },
+  {
+    id: 'bowl.wicket_efficiency',
+    name: 'Bowling Wicket Efficiency',
+    category: MetricCategory.Bowling,
+    level: MetricLevel.Composite,
+    dependencies: ['bowl.average', 'bowl.strike_rate', 'bowl.wickets', 'bowl.innings'],
+    version,
+    calculator: new BowlWicketEfficiencyCalculator(),
   },
   {
     id: 'field.impact',
@@ -147,5 +217,32 @@ export const compositeMetricDefinitions: readonly MetricDefinition[] = [
     ],
     version,
     calculator: new FieldActivityCalculator(),
+  },
+  {
+    id: 'field.catching_impact',
+    name: 'Catching Impact',
+    category: MetricCategory.Fielding,
+    level: MetricLevel.Composite,
+    dependencies: ['field.catches', 'field.matches'],
+    version,
+    calculator: new FieldCatchingImpactCalculator(),
+  },
+  {
+    id: 'field.run_out_impact',
+    name: 'Run Out Impact',
+    category: MetricCategory.Fielding,
+    level: MetricLevel.Composite,
+    dependencies: ['field.run_outs', 'field.assisted_run_outs', 'field.matches'],
+    version,
+    calculator: new FieldRunOutImpactCalculator(),
+  },
+  {
+    id: 'field.dismissal_involvement',
+    name: 'Dismissal Involvement',
+    category: MetricCategory.Fielding,
+    level: MetricLevel.Composite,
+    dependencies: ['field.dismissals', 'field.matches', 'field.innings'],
+    version,
+    calculator: new FieldDismissalInvolvementCalculator(),
   },
 ]

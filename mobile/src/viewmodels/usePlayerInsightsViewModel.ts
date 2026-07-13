@@ -1,59 +1,59 @@
-import { useMemo, useState } from 'react'
-import rawPlayerInsights from '../mocks/playerInsights.json'
+import { useCallback, useEffect, useState } from 'react'
+import { fetchPlayerScoutProfile } from '../services/playerService'
+import type { CricDnaProfileResponse } from '../types/aiScout'
 import type { Player } from '../types/player'
-import type { PlayerInsightsResponse, RecentMatch } from '../types/playerInsights'
 import { ViewState } from '../types/viewState'
 
-export interface RecentMatchViewData extends RecentMatch {
-  displayDate: string
-}
-
 interface PlayerInsightsViewModel {
-  insights: PlayerInsightsResponse
-  recentMatches: RecentMatchViewData[]
+  report: CricDnaProfileResponse | null
   viewState: ViewState
   errorMessage: string | null
+  retry: () => Promise<void>
 }
 
-const playerInsightsMock = rawPlayerInsights as PlayerInsightsResponse
+const getErrorMessage = (error: unknown): string => {
+  if (error instanceof Error) {
+    return error.message
+  }
 
-const formatMatchDate = (date: string): string => {
-  return new Intl.DateTimeFormat('en', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  }).format(new Date(date))
+  return 'Unable to generate CricDNA scouting report.'
 }
 
 export const usePlayerInsightsViewModel = (
   selectedPlayer: Player,
 ): PlayerInsightsViewModel => {
-  const [viewState] = useState<ViewState>(ViewState.Loaded)
-  const [errorMessage] = useState<string | null>(null)
+  const [report, setReport] = useState<CricDnaProfileResponse | null>(null)
+  const [viewState, setViewState] = useState<ViewState>(ViewState.Idle)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const insights = useMemo<PlayerInsightsResponse>(() => {
-    return {
-      ...playerInsightsMock,
-      identity: {
-        ...playerInsightsMock.identity,
-        id: selectedPlayer.id,
-        name: selectedPlayer.name,
-        country: selectedPlayer.country,
-      },
+  const loadProfile = useCallback(async () => {
+    setViewState(ViewState.Loading)
+    setErrorMessage(null)
+
+    try {
+      const scoutReport = await fetchPlayerScoutProfile(selectedPlayer.id)
+
+      setReport(scoutReport)
+      setViewState(ViewState.Loaded)
+    } catch (error) {
+      setReport(null)
+      setErrorMessage(getErrorMessage(error))
+      setViewState(ViewState.Error)
     }
-  }, [selectedPlayer.country, selectedPlayer.id, selectedPlayer.name])
+  }, [selectedPlayer.id])
 
-  const recentMatches = useMemo<RecentMatchViewData[]>(() => {
-    return insights.recentMatches.map((match) => ({
-      ...match,
-      displayDate: formatMatchDate(match.date),
-    }))
-  }, [insights])
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      void loadProfile()
+    }, 0)
+
+    return () => clearTimeout(timeout)
+  }, [loadProfile])
 
   return {
-    insights,
-    recentMatches,
+    report,
     viewState,
     errorMessage,
+    retry: loadProfile,
   }
 }

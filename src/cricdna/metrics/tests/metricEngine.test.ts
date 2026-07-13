@@ -216,12 +216,21 @@ describe('Metric Engine infrastructure', () => {
       'bat.boundary_intent',
       'bat.consistency',
       'bat.scoring_consistency',
+      'bat.effectiveness',
+      'bat.conversion',
+      'bat.dismissal_resilience',
       'bowl.control',
       'bowl.wicket_threat',
       'bowl.effectiveness',
+      'bowl.run_control',
+      'bowl.discipline',
+      'bowl.wicket_efficiency',
       'field.impact',
       'field.reliability',
       'field.activity',
+      'field.catching_impact',
+      'field.run_out_impact',
+      'field.dismissal_involvement',
     ])
   })
 })

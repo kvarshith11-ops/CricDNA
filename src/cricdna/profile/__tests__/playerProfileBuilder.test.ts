@@ -76,6 +76,10 @@ const traits = (entries: readonly TraitResult[]): TraitResults => {
   return new TraitResults(new Map(entries.map((entry) => [entry.traitId, entry])))
 }
 
+type RecordOverrides = Omit<Partial<PlayerMatchRecordProps>, 'identity'> & {
+  readonly identity?: Partial<PlayerMatchRecordProps['identity']>
+}
+
 const defaultMetrics = (): EngineeringMetrics =>
   metrics([
     metric('context.matches', MetricLevel.Primitive, MetricCategory.Context, 3),
@@ -102,7 +106,7 @@ const makeRecord = (
   matchId: string,
   matchDate: string,
   role: PlayerRole,
-  overrides: Partial<PlayerMatchRecordProps> = {},
+  overrides: RecordOverrides = {},
 ): PlayerMatchRecord => {
   return PlayerMatchRecord.create({
     identity: {
@@ -111,6 +115,7 @@ const makeRecord = (
       matchId,
       team: { id: 'team-a', name: 'Team A' },
       opponent: { id: 'team-b', name: 'Team B' },
+      country: 'India',
       role,
       ...overrides.identity,
     },
@@ -232,12 +237,67 @@ describe('PlayerProfileBuilder', () => {
       battingAverage: 60,
       strikeRate: 125,
       bestScore: 90,
+      bestBowling: '2/22',
     })
     expect(profile.primitiveMetrics['bat.runs']?.value).toBe(180)
     expect(profile.compositeMetrics['bat.intent']?.value).toBe(80)
     expect(profile.traits['trait.batting_style']?.classification).toBe(
       'Aggressive Stroke Player',
     )
+  })
+
+  it('derives age from supported source date formats', () => {
+    const ddMmYyyy = makePkm(PlayerRole.Batter, [
+      makeRecord('m1', '2026-01-01', PlayerRole.Batter, {
+        identity: { dateOfBirth: '28/12/2001' },
+      }),
+      makeRecord('m2', '2026-01-02', PlayerRole.Batter, {
+        identity: { dateOfBirth: '28/12/2001' },
+      }),
+      makeRecord('m3', '2026-01-03', PlayerRole.Batter, {
+        identity: { dateOfBirth: '28/12/2001' },
+      }),
+    ])
+    const iso = makePkm(PlayerRole.Batter, [
+      makeRecord('m1', '2026-01-01', PlayerRole.Batter, {
+        identity: { dateOfBirth: '1998-07-18' },
+      }),
+      makeRecord('m2', '2026-01-02', PlayerRole.Batter, {
+        identity: { dateOfBirth: '1998-07-18' },
+      }),
+      makeRecord('m3', '2026-01-03', PlayerRole.Batter, {
+        identity: { dateOfBirth: '1998-07-18' },
+      }),
+    ])
+
+    expect(build(ddMmYyyy).profile.identity.age).toBe(24)
+    expect(build(iso).profile.identity.age).toBe(27)
+  })
+
+  it('derives country from national team metadata when nationality is blank', () => {
+    const records = [
+      makeRecord('m1', '2026-01-01', PlayerRole.AllRounder, {
+        identity: {
+          country: '',
+          team: { id: '3', name: 'India Men' },
+        },
+      }),
+      makeRecord('m2', '2026-01-02', PlayerRole.AllRounder, {
+        identity: {
+          country: '',
+          team: { id: '3', name: 'India Men' },
+        },
+      }),
+      makeRecord('m3', '2026-01-03', PlayerRole.AllRounder, {
+        identity: {
+          country: '',
+          team: { id: '3', name: 'India Men' },
+        },
+      }),
+    ]
+    const { profile } = build(makePkm(PlayerRole.AllRounder, records))
+
+    expect(profile.identity.country).toBe('India')
   })
 
   it('builds a bowler profile', () => {
@@ -261,9 +321,465 @@ describe('PlayerProfileBuilder', () => {
 
     expect(profile.identity.role).toBe('wicket_keeper')
     expect(profile.headlineStats.catches).toBe(2)
+    expect(profile.headlineStats.keeperDismissals).toBeDefined()
     expect(profile.traits['trait.fielding_style']?.classification).toBe(
       'Active Fielder',
     )
+  })
+
+  it('marks careers with fewer than three matches as guardrail ineligible', () => {
+    const records = [
+      makeRecord('m1', '2026-01-01', PlayerRole.Batter),
+      makeRecord('m2', '2026-01-02', PlayerRole.Batter),
+    ]
+    const { profile } = build(makePkm(PlayerRole.Batter, records))
+
+    expect(profile.guardrails).toMatchObject({
+      eligible: false,
+      sampleSize: 2,
+      minimumRequiredMatches: 3,
+    })
+    expect(profile.guardrails.reasons[0]).toContain('At least 3 match records')
+  })
+
+  it('allows careers with exactly three matches through guardrails', () => {
+    const { profile } = build(makePkm(PlayerRole.Batter))
+
+    expect(profile.guardrails.eligible).toBe(true)
+    expect(profile.guardrails.sampleSize).toBe(3)
+  })
+
+  it('detects improving batting trend over the latest three matches', () => {
+    const records = [
+      makeRecord('m1', '2026-01-01', PlayerRole.Batter, {
+        batting: { innings: [{ inningsNumber: 1, didBat: true, runs: 10, ballsFaced: 10, fours: 1, sixes: 0 }] },
+      }),
+      makeRecord('m2', '2026-01-02', PlayerRole.Batter, {
+        batting: { innings: [{ inningsNumber: 1, didBat: true, runs: 20, ballsFaced: 15, fours: 2, sixes: 0 }] },
+      }),
+      makeRecord('m3', '2026-01-03', PlayerRole.Batter, {
+        batting: { innings: [{ inningsNumber: 1, didBat: true, runs: 60, ballsFaced: 40, fours: 6, sixes: 1 }] },
+      }),
+    ]
+    const { profile } = build(makePkm(PlayerRole.Batter, records))
+
+    expect(profile.trend.label).toBe('Improving')
+    expect(profile.trend.direction).toBe('up')
+    expect(profile.trend.reason).toContain('lifted scoring output')
+    expect(profile.trend.reason).not.toContain('(10, 20, 60)')
+  })
+
+  it('detects strong batting form from multiple recent fifties', () => {
+    const records = [89, 89, 97].map((runs, index) =>
+      makeRecord(`m${index + 1}`, `2026-01-0${index + 1}`, PlayerRole.Batter, {
+        batting: { innings: [{ inningsNumber: 1, didBat: true, runs, ballsFaced: 50, fours: 8, sixes: 2 }] },
+      }),
+    )
+    const { profile } = build(makePkm(PlayerRole.Batter, records))
+
+    expect(profile.trend.label).toBe('Strong')
+    expect(profile.trend.direction).toBe('up')
+    expect(profile.trend.reason).toContain('strong batting form')
+  })
+
+  it('detects declining batting trend over the latest three matches', () => {
+    const records = [
+      makeRecord('m1', '2026-01-01', PlayerRole.Batter, {
+        batting: { innings: [{ inningsNumber: 1, didBat: true, runs: 60, ballsFaced: 40, fours: 6, sixes: 1 }] },
+      }),
+      makeRecord('m2', '2026-01-02', PlayerRole.Batter, {
+        batting: { innings: [{ inningsNumber: 1, didBat: true, runs: 20, ballsFaced: 15, fours: 2, sixes: 0 }] },
+      }),
+      makeRecord('m3', '2026-01-03', PlayerRole.Batter, {
+        batting: { innings: [{ inningsNumber: 1, didBat: true, runs: 10, ballsFaced: 10, fours: 1, sixes: 0 }] },
+      }),
+    ]
+    const { profile } = build(makePkm(PlayerRole.Batter, records))
+
+    expect(profile.trend.label).toBe('Declining')
+    expect(profile.trend.direction).toBe('down')
+    expect(profile.trend.reason).toContain('lower scoring returns')
+    expect(profile.trend.reason).not.toContain('(60, 20, 10)')
+  })
+
+  it('marks mixed batting recovery as stable instead of declining', () => {
+    const records = [69, 16, 40].map((runs, index) =>
+      makeRecord(`m${index + 1}`, `2026-01-0${index + 1}`, PlayerRole.Batter, {
+        batting: { innings: [{ inningsNumber: 1, didBat: true, runs, ballsFaced: 35, fours: 4, sixes: 1 }] },
+      }),
+    )
+    const { profile } = build(makePkm(PlayerRole.Batter, records))
+
+    expect(profile.trend.label).toBe('Stable')
+    expect(profile.trend.direction).toBe('flat')
+    expect(profile.trend.reason).toContain('after a strong score and a dip')
+  })
+
+  it('detects weak batting form from consistently low recent output', () => {
+    const records = [5, 12, 8].map((runs, index) =>
+      makeRecord(`m${index + 1}`, `2026-01-0${index + 1}`, PlayerRole.Batter, {
+        batting: { innings: [{ inningsNumber: 1, didBat: true, runs, ballsFaced: 20, fours: 1, sixes: 0 }] },
+      }),
+    )
+    const { profile } = build(makePkm(PlayerRole.Batter, records))
+
+    expect(profile.trend.label).toBe('Weak')
+    expect(profile.trend.direction).toBe('down')
+    expect(profile.trend.reason).toContain('not produced enough recent scoring output')
+  })
+
+  it('detects improving bowling trend from wickets', () => {
+    const records = [0, 1, 3].map((wickets, index) =>
+      makeRecord(`m${index + 1}`, `2026-01-0${index + 1}`, PlayerRole.Bowler, {
+        bowling: {
+          wickets: [],
+          spells: [
+            {
+              inningsNumber: 1,
+              didBowl: true,
+              overs: 4,
+              balls: 24,
+              maidens: 0,
+              runsConceded: 24,
+              wickets,
+              noBalls: 0,
+              wides: 0,
+            },
+          ],
+        },
+      }),
+    )
+    const { profile } = build(makePkm(PlayerRole.Bowler, records))
+
+    expect(profile.trend.label).toBe('Improving')
+    expect(profile.trend.reason).toContain('combined wicket-taking and economy profile')
+  })
+
+  it('summarizes bowling trend without dumping raw metric sequences', () => {
+    const economies = [9, 8.25, 3.75]
+    const records = [2, 1, 4].map((wickets, index) =>
+      makeRecord(`m${index + 1}`, `2026-01-0${index + 1}`, PlayerRole.Bowler, {
+        bowling: {
+          wickets: [],
+          spells: [
+            {
+              inningsNumber: 1,
+              didBowl: true,
+              overs: 4,
+              balls: 24,
+              maidens: 0,
+              runsConceded: economies[index] * 4,
+              wickets,
+              noBalls: 0,
+              wides: 0,
+            },
+          ],
+        },
+      }),
+    )
+    const { profile } = build(makePkm(PlayerRole.Bowler, records))
+
+    expect(profile.trend.label).toBe('Improving')
+    expect(profile.trend.reason).toContain('combined wicket-taking and economy profile')
+    expect(profile.trend.reason).not.toContain('(2, 1, 4)')
+    expect(profile.trend.reason).not.toContain('(9, 8.25, 3.75)')
+  })
+
+  it('marks low-wicket economical bowling as stable rather than weak', () => {
+    const records = [3.2, 3.5, 3.1].map((economy, index) =>
+      makeRecord(`m${index + 1}`, `2026-01-0${index + 1}`, PlayerRole.Bowler, {
+        bowling: {
+          wickets: [],
+          spells: [
+            {
+              inningsNumber: 1,
+              didBowl: true,
+              overs: 4,
+              balls: 24,
+              maidens: 0,
+              runsConceded: economy * 4,
+              wickets: 0,
+              noBalls: 0,
+              wides: 0,
+            },
+          ],
+        },
+      }),
+    )
+    const { profile } = build(makePkm(PlayerRole.Bowler, records))
+
+    expect(profile.trend.label).toBe('Stable')
+    expect(profile.trend.reason).toContain('balanced')
+  })
+
+  it('detects weak bowling trend from low wickets and expensive economy', () => {
+    const records = [0, 0, 0].map((wickets, index) =>
+      makeRecord(`m${index + 1}`, `2026-01-0${index + 1}`, PlayerRole.Bowler, {
+        bowling: {
+          wickets: [],
+          spells: [
+            {
+              inningsNumber: 1,
+              didBowl: true,
+              overs: 4,
+              balls: 24,
+              maidens: 0,
+              runsConceded: [38, 40, 42][index],
+              wickets,
+              noBalls: 0,
+              wides: 0,
+            },
+          ],
+        },
+      }),
+    )
+    const { profile } = build(makePkm(PlayerRole.Bowler, records))
+
+    expect(profile.trend.label).toBe('Weak')
+    expect(profile.trend.reason).toContain('low wicket threat')
+  })
+
+  it('detects declining bowling trend when combined impact drops', () => {
+    const wickets = [3, 1, 0]
+    const economies = [4.5, 7, 9]
+    const records = wickets.map((wicketCount, index) =>
+      makeRecord(`m${index + 1}`, `2026-01-0${index + 1}`, PlayerRole.Bowler, {
+        bowling: {
+          wickets: [],
+          spells: [
+            {
+              inningsNumber: 1,
+              didBowl: true,
+              overs: 4,
+              balls: 24,
+              maidens: 0,
+              runsConceded: economies[index] * 4,
+              wickets: wicketCount,
+              noBalls: 0,
+              wides: 0,
+            },
+          ],
+        },
+      }),
+    )
+    const { profile } = build(makePkm(PlayerRole.Bowler, records))
+
+    expect(profile.trend.label).toBe('Declining')
+    expect(profile.trend.reason).toContain('combined wicket-taking and economy profile')
+  })
+
+  it('uses batting only for wicketkeeper trend and ignores dismissals', () => {
+    const records = [0, 1, 2].map((dismissals, index) =>
+      makeRecord(`m${index + 1}`, `2026-01-0${index + 1}`, PlayerRole.WicketKeeper, {
+        batting: {
+          innings: [
+            {
+              inningsNumber: 1,
+              didBat: true,
+              runs: [69, 16, 40][index],
+              ballsFaced: 40,
+              fours: 4,
+              sixes: 1,
+            },
+          ],
+        },
+        fielding: {
+          innings: [
+            {
+              inningsNumber: 1,
+              catches: dismissals,
+              stumpings: 0,
+              runOutsDirect: 0,
+              runOutsAssisted: 0,
+            },
+          ],
+        },
+      }),
+    )
+    const { profile } = build(makePkm(PlayerRole.WicketKeeper, records))
+
+    expect(profile.trend.label).toBe('Stable')
+    expect(profile.trend.reason).toContain('wicketkeeper')
+    expect(profile.trend.reason).not.toContain('dismissals')
+  })
+
+  it('marks sustained wicketkeeper 50-plus scoring as strong form', () => {
+    const runs = [97, 89, 89]
+    const dismissals = [2, 1, 0]
+    const records = runs.map((score, index) =>
+      makeRecord(`m${index + 1}`, `2026-01-0${index + 1}`, PlayerRole.WicketKeeper, {
+        batting: {
+          innings: [
+            {
+              inningsNumber: 1,
+              didBat: true,
+              runs: score,
+              ballsFaced: 50,
+              fours: 8,
+              sixes: 2,
+            },
+          ],
+        },
+        fielding: {
+          innings: [
+            {
+              inningsNumber: 1,
+              catches: dismissals[index],
+              stumpings: 0,
+              runOutsDirect: 0,
+              runOutsAssisted: 0,
+            },
+          ],
+        },
+      }),
+    )
+    const { profile } = build(makePkm(PlayerRole.WicketKeeper, records))
+
+    expect(profile.trend.label).toBe('Strong')
+    expect(profile.trend.direction).toBe('up')
+    expect(profile.trend.reason).toContain('strong batting form')
+    expect(profile.trend.reason).toContain('sustained scoring output')
+  })
+
+  it('marks all-rounder strong batting and weak bowling as stable', () => {
+    const runs = [70, 65, 80]
+    const records = runs.map((score, index) =>
+      makeRecord(`m${index + 1}`, `2026-01-0${index + 1}`, PlayerRole.AllRounder, {
+        batting: {
+          innings: [
+            {
+              inningsNumber: 1,
+              didBat: true,
+              runs: score,
+              ballsFaced: 50,
+              fours: 7,
+              sixes: 1,
+            },
+          ],
+        },
+        bowling: {
+          wickets: [],
+          spells: [
+            {
+              inningsNumber: 1,
+              didBowl: true,
+              overs: 4,
+              balls: 24,
+              maidens: 0,
+              runsConceded: [42, 40, 44][index],
+              wickets: 0,
+              noBalls: 0,
+              wides: 0,
+            },
+          ],
+        },
+      }),
+    )
+    const { profile } = build(makePkm(PlayerRole.AllRounder, records))
+
+    expect(profile.trend.label).toBe('Stable')
+    expect(profile.trend.reason).toContain('batting and bowling signals')
+  })
+
+  it('marks all-rounder strong batting and bowling as strong', () => {
+    const records = [70, 65, 80].map((score, index) =>
+      makeRecord(`m${index + 1}`, `2026-01-0${index + 1}`, PlayerRole.AllRounder, {
+        batting: {
+          innings: [
+            {
+              inningsNumber: 1,
+              didBat: true,
+              runs: score,
+              ballsFaced: 50,
+              fours: 7,
+              sixes: 1,
+            },
+          ],
+        },
+        bowling: {
+          wickets: [],
+          spells: [
+            {
+              inningsNumber: 1,
+              didBowl: true,
+              overs: 4,
+              balls: 24,
+              maidens: 0,
+              runsConceded: [18, 16, 14][index],
+              wickets: [2, 3, 3][index],
+              noBalls: 0,
+              wides: 0,
+            },
+          ],
+        },
+      }),
+    )
+    const { profile } = build(makePkm(PlayerRole.AllRounder, records))
+
+    expect(profile.trend.label).toBe('Strong')
+    expect(profile.trend.reason).toContain('both batting and bowling')
+  })
+
+  it('selects the best bowling figure by wickets, then lower runs conceded', () => {
+    const records = [
+      makeRecord('m1', '2026-01-01', PlayerRole.Bowler, {
+        bowling: {
+          wickets: [],
+          spells: [
+            {
+              inningsNumber: 1,
+              didBowl: true,
+              overs: 4,
+              balls: 24,
+              maidens: 0,
+              runsConceded: 35,
+              wickets: 3,
+              noBalls: 0,
+              wides: 0,
+            },
+          ],
+        },
+      }),
+      makeRecord('m2', '2026-01-02', PlayerRole.Bowler, {
+        bowling: {
+          wickets: [],
+          spells: [
+            {
+              inningsNumber: 1,
+              didBowl: true,
+              overs: 4,
+              balls: 24,
+              maidens: 0,
+              runsConceded: 24,
+              wickets: 4,
+              noBalls: 0,
+              wides: 0,
+            },
+          ],
+        },
+      }),
+      makeRecord('m3', '2026-01-03', PlayerRole.Bowler, {
+        bowling: {
+          wickets: [],
+          spells: [
+            {
+              inningsNumber: 1,
+              didBowl: true,
+              overs: 4,
+              balls: 24,
+              maidens: 0,
+              runsConceded: 18,
+              wickets: 3,
+              noBalls: 0,
+              wides: 0,
+            },
+          ],
+        },
+      }),
+    ]
+    const { profile } = build(makePkm(PlayerRole.Bowler, records))
+
+    expect(profile.headlineStats.bestBowling).toBe('4/24')
   })
 
   it('keeps only the latest five recent matches', () => {

@@ -212,6 +212,83 @@ export class FieldActivityCalculator extends FieldingCompositeCalculator {
   }
 }
 
+export class FieldCatchingImpactCalculator extends FieldingCompositeCalculator {
+  constructor() {
+    super({
+      metricId: 'field.catching_impact',
+      name: 'Catching Impact',
+      dependencies: ['field.catches', 'field.matches'],
+      calculateScore: (inputs) => {
+        const matches = requiredPositiveInput(inputs, 'field.matches')
+
+        return roundScore(
+          normalize(
+            requiredInput(inputs, 'field.catches') / matches,
+            CATCHES_PER_MATCH_BENCHMARK,
+          ),
+        )
+      },
+      metadata: {
+        catchesPerMatchWeight: 1,
+        catchesPerMatchBenchmark: CATCHES_PER_MATCH_BENCHMARK,
+      },
+    })
+  }
+}
+
+export class FieldRunOutImpactCalculator extends FieldingCompositeCalculator {
+  constructor() {
+    super({
+      metricId: 'field.run_out_impact',
+      name: 'Run Out Impact',
+      dependencies: ['field.run_outs', 'field.assisted_run_outs', 'field.matches'],
+      calculateScore: (inputs) => {
+        const matches = requiredPositiveInput(inputs, 'field.matches')
+        const runOuts =
+          requiredInput(inputs, 'field.run_outs') +
+          requiredInput(inputs, 'field.assisted_run_outs')
+
+        return roundScore(normalize(runOuts / matches, RUN_OUTS_PER_MATCH_BENCHMARK))
+      },
+      metadata: {
+        runOutsPerMatchWeight: 1,
+        runOutsPerMatchBenchmark: RUN_OUTS_PER_MATCH_BENCHMARK,
+      },
+    })
+  }
+}
+
+export class FieldDismissalInvolvementCalculator extends FieldingCompositeCalculator {
+  constructor() {
+    super({
+      metricId: 'field.dismissal_involvement',
+      name: 'Dismissal Involvement',
+      dependencies: ['field.dismissals', 'field.matches', 'field.innings'],
+      calculateScore: (inputs) => {
+        const matches = requiredPositiveInput(inputs, 'field.matches')
+        const innings = requiredPositiveInput(inputs, 'field.innings')
+        const dismissals = requiredInput(inputs, 'field.dismissals')
+        const dismissalsPerMatchScore = normalize(
+          dismissals / matches,
+          DISMISSALS_PER_MATCH_BENCHMARK,
+        )
+        const dismissalsPerInningsScore = normalize(
+          dismissals / innings,
+          DISMISSALS_PER_INNINGS_BENCHMARK,
+        )
+
+        return roundScore(dismissalsPerMatchScore * 0.6 + dismissalsPerInningsScore * 0.4)
+      },
+      metadata: {
+        dismissalsPerMatchWeight: 0.6,
+        dismissalsPerInningsWeight: 0.4,
+        dismissalsPerMatchBenchmark: DISMISSALS_PER_MATCH_BENCHMARK,
+        dismissalsPerInningsBenchmark: DISMISSALS_PER_INNINGS_BENCHMARK,
+      },
+    })
+  }
+}
+
 type InputResult =
   | {
       readonly ok: true
